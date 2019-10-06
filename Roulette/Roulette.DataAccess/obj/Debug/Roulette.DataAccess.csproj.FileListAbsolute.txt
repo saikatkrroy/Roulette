@@ -1,0 +1,12 @@
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\Roulette.DataAccess.dll.config
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\Roulette.DataAccess.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\Roulette.DataAccess.pdb
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\EntityFramework.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\EntityFramework.xml
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.csprojAssemblyReference.cache
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.csproj.CoreCompileInputs.cache
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.csproj.CopyComplete
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.pdb
