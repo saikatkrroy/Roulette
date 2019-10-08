@@ -10,3 +10,5 @@ D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.Data
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.csproj.CopyComplete
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.pdb
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.InitialModel.resources
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.csproj.GenerateResource.cache
