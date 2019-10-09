@@ -43,3 +43,9 @@ D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\obj\Debug\Roulette.Tests.csp
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\obj\Debug\Roulette.Tests.csproj.CopyComplete
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\obj\Debug\Roulette.Tests.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\obj\Debug\Roulette.Tests.pdb
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\bin\Debug\Unity.Abstractions.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\bin\Debug\Unity.Container.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\bin\Debug\Unity.Abstractions.pdb
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.Tests\bin\Debug\Unity.Container.pdb

@@ -48,8 +48,6 @@ D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\roslyn\vbc.rsp
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\roslyn\VBCSCompiler.exe
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\roslyn\VBCSCompiler.exe.config
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\Antlr3.Runtime.dll
-D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\EntityFramework.dll
-D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\EntityFramework.SqlServer.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\Microsoft.Web.Infrastructure.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\Newtonsoft.Json.dll
@@ -64,8 +62,6 @@ D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.WebPages.Deployment
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.WebPages.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.WebPages.Razor.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\WebGrease.dll
-D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\EntityFramework.xml
-D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\EntityFramework.SqlServer.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.Helpers.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.Mvc.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.Optimization.xml
@@ -79,7 +75,6 @@ D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Net.Http.Formatting.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.Http.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\System.Web.Http.WebHost.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Upwork\Roulette\Roulette\Roulette\Roulette\obj\Debug\Roulette.csprojAssemblyReference.cache
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\obj\Debug\Roulette.csproj.CoreCompileInputs.cache
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\obj\Debug\Roulette.csproj.CopyComplete
 D:\Upwork\Roulette\Roulette\Roulette\Roulette\obj\Debug\Roulette.dll

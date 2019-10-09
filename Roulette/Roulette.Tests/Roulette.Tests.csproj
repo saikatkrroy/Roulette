@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Roulette\Roulette.csproj">
-      <Project>{A86E70E8-6967-4F9D-BFAB-202D2BE54C4B}</Project>
+      <Project>{3b53c9b8-a2f9-4c19-aa26-cf241f7fbeaa}</Project>
       <Name>Roulette</Name>
     </ProjectReference>
   </ItemGroup>

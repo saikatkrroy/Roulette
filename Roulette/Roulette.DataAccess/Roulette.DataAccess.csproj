@@ -33,11 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -65,7 +68,22 @@
     <Compile Include="Migrations\201910081058345_InitialModel.Designer.cs">
       <DependentUpon>201910081058345_InitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910090924042_Add colors.cs" />
+    <Compile Include="Migrations\201910090924042_Add colors.Designer.cs">
+      <DependentUpon>201910090924042_Add colors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910090933402_Add Logs.cs" />
+    <Compile Include="Migrations\201910090933402_Add Logs.Designer.cs">
+      <DependentUpon>201910090933402_Add Logs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910090940392_Populate Numbers and Colors.cs" />
+    <Compile Include="Migrations\201910090940392_Populate Numbers and Colors.Designer.cs">
+      <DependentUpon>201910090940392_Populate Numbers and Colors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Colors.cs" />
+    <Compile Include="Models\Logs.cs" />
+    <Compile Include="Models\Numbers.cs" />
     <Compile Include="RouletteDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Repository.cs" />
@@ -81,7 +99,18 @@
     <EmbeddedResource Include="Migrations\201910081058345_InitialModel.resx">
       <DependentUpon>201910081058345_InitialModel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910090924042_Add colors.resx">
+      <DependentUpon>201910090924042_Add colors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910090933402_Add Logs.resx">
+      <DependentUpon>201910090933402_Add Logs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910090940392_Populate Numbers and Colors.resx">
+      <DependentUpon>201910090940392_Populate Numbers and Colors.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Mapping\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
