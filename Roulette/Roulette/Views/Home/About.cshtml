@@ -1,7 +1,23 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Place Your Bet";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<p>Use this area to provide additional information.</p>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
+    <script src="~/Scripts/About.js"></script>
+</head>
+<div class="row">
+    <div class="col-md-4">
+        <div ng-app="Roulette" ng-controller="HomeController" style="background-color:blue" ng-cloak>
+            <p style="color:white">Odd vs Even Statistics:</p>
+            <p style="color:white">Odd:{{OddEvenStats.Odd}}%</p>
+            <p style="color:white">Even:{{OddEvenStats.Even}}%</p>
+            <p style="color:white">Color Statistics</p>
+            <p style="color:white">Black:{{ColorStats.Black}}%</p>
+            <p style="color:white">Red:{{ColorStats.Red}}%</p>
+            <p style="color:white">Hot Numbers</p>
+            <p ng-repeat="HotNumber in HotNumbers" ng-style="{'color':HotNumber.Color.Name}">{{HotNumber.Number}}</p>
+            <p style="color:white">Cool Numbers</p>
+            <p ng-repeat="CoolNumber in CoolNumbers"ng-style="{'color':CoolNumber.Color.Name}">{{CoolNumber.Number}}</p>
+        </div>
+    </div>
+</div>

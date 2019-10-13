@@ -12,6 +12,5 @@ namespace Roulette.DataAccess.Models
         public int ColorId { get; set; }
         public string OddEvenFactor { get; set; }
         public virtual Colors Color { get; set; }
-        public virtual IList<Logs> Logs { get; set; }
     }
 }

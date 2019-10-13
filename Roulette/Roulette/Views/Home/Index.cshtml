@@ -1,31 +1,26 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Place Your Bet";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
+    <script src="~/Scripts/Index.js"></script>
+</head>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-4" >
+        <div ng-app = "Roulette" ng-controller="HomeController" ng-cloak>
+            <form onsubmit="PlaceYourBet()">
+                <p>Enter your Bet:</p>
+                <select ng-model="bet">
+                    <option value="">Please choose...</option>
+                    <option ng-repeat="number in Numbers" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
+                   
+                </select>
+                <p>Your bet is <span ng-bind="bet"></span>.</p>
+                <input type="submit" value="Submit" ng-click="PlaceYourBet()">
+            </form>
+            <p ng-show="BetPlaced">Your Bet is Placed</p>
+            <p ng-show="ActionFailed">Failed to place your bet</p>
+        </div>
     </div>
 </div>

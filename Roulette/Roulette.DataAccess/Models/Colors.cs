@@ -11,7 +11,6 @@ namespace Roulette.DataAccess.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual IList<Numbers> Numbers { get; set; }
 
     }
 }
