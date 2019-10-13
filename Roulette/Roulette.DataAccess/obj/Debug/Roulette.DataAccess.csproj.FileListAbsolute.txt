@@ -18,9 +18,10 @@ D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\Unity.Contain
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\Unity.Abstractions.pdb
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\Unity.Container.pdb
-D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.Addcolors.resources
-D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.AddLogs.resources
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\AutoMapper.dll
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\AutoMapper.pdb
 D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\AutoMapper.xml
-D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.PopulateNumbersandColors.resources
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\System.Data.SqlClient.dll
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\bin\Debug\System.Data.SqlClient.xml
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.CreateInitialmodels.resources
+D:\Upwork\Roulette\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.PopulateDatabase.resources

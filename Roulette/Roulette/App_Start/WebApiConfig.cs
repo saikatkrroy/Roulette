@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Roulette.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Unity;
 
 namespace Roulette
 {
@@ -19,6 +21,14 @@ namespace Roulette
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(UnityConfig.RegisterComponents());
+        }
+        public static void RegisterComponents(IUnityContainer container)
+        {
+
+
+
+
         }
     }
 }
