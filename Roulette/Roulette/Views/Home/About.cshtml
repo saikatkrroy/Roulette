@@ -9,22 +9,22 @@
     <div class="col-md-4">
         <div ng-app="Roulette" ng-controller="HomeController" style="background-color:blue" ng-cloak>
             <p style="color:white">Odd vs Even Statistics:</p>
-            <p style="color:red" ng-show="OddEvenStatsFailure">Failed to Retrieve Odd Even statistics</p>
+            <p style="color:red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
             <div ng-show="!OddEvenStatsFailure">
                 <p style="color:white">Odd:{{OddEvenStats.Odd}}%</p>
                 <p style="color:white">Even:{{OddEvenStats.Even}}%</p>
             </div>
             <p style="color:white">Color Statistics</p>
-            <p style="color:red" ng-show="ColorStatsFailure">Failed to Retrieve Color statistics</p>
+            <p style="color:red" ng-show="ColorStatsFailure">Unable to Retrieve Color statistics. Please contact system administrator.</p>
             <div ng-show="!ColorStatsFailure">
                 <p style="color:white">Black:{{ColorStats.Black}}%</p>
                 <p style="color:white">Red:{{ColorStats.Red}}%</p>
             </div>
             <p style="color:white">Hot Numbers</p>
-            <p style="color:red" ng-show="HotNumberFailure">Failed to Retrieve Hot Numbers</p>
+            <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Hot Numbers. Please contact system administrator.</p>
             <div style="background-color:white" ng-show="!HotNumberFailure"><p ng-repeat="HotNumber in HotNumbers" ng-style="{'color':HotNumber.Color.Name}">{{HotNumber.Number}}</p></div>
             <p style="color:white">Cool Numbers</p>
-            <p style="color:red" ng-show="CoolNumberFailure">Failed to Retrieve Cool Numbers</p>
+            <p style="color:red" ng-show="CoolNumberFailure">Unable to Retrieve Cool Numbers. Please contact system administrator.</p>
             <div style="background-color:white" ng-show="!CoolNumberFailure">
                 <p ng-repeat="CoolNumber in CoolNumbers" ng-style="{'color':CoolNumber.Color.Name}">{{CoolNumber.Number}}</p>
             </div>

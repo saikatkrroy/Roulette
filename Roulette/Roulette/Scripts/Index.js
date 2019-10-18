@@ -9,9 +9,13 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.ColorStats = [];
     $scope.BetPlaced = false;
     $scope.ActionFailed = false;
+    $scope.NumberLoadFailed = false;
     $http.get('/api/RouletteEntry/RetrieveNumbers')
         .then(function successCallback(response) {
-            $scope.Numbers = JSON.parse(JSON.stringify(response.data));
+            if (response.data == null)
+                $scope.NumberLoadFailed = true;
+            else
+                $scope.Numbers = JSON.parse(JSON.stringify(response.data));
         },
             function failureCallback(response) {
                 var data = response.Data;

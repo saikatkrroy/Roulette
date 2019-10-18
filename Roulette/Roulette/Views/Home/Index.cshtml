@@ -11,7 +11,8 @@
         <div ng-app = "Roulette" ng-controller="HomeController" ng-cloak>
             <form onsubmit="PlaceYourBet()">
                 <p>Enter your Bet:</p>
-                <select ng-model="bet">
+                <p style="color:red" ng-show="NumberLoadFailed"> Failed to load numbers</p>
+                <select ng-model="bet" ng-show="!NumberLoadFailed">
                     <option value="">Please choose...</option>
                     <option ng-repeat="number in Numbers" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
                    
