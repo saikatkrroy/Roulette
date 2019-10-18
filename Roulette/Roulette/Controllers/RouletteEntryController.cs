@@ -21,26 +21,34 @@ namespace Roulette.Controllers
         }
         [HttpGet]
         [Route("api/RouletteEntry/RetrieveHotNumber")]
-        public Numbers[] RetrieveHotNumber()
+        public List<Numbers> RetrieveHotNumber()
         {
+            List<Numbers> numbers = new List<Numbers>();
             var logs = _logRepository.Find().ToList();
             var lastHundredLogs = (from log in logs
                                            orderby log.Id descending
                                            select log).Take(100).ToList();
             var hotNumbers = lastHundredLogs.GroupBy(c => c.NumberId).OrderByDescending(c => c.Count()).Take(4).ToList();
-            Numbers[] numbers = { hotNumbers[0].ElementAt(0).Number, hotNumbers[1].ElementAt(0).Number, hotNumbers[2].ElementAt(0).Number, hotNumbers[3].ElementAt(0).Number };
+            foreach(var hotNumber in hotNumbers)
+            {
+                numbers.Add(hotNumber.First().Number);
+            }
             return numbers ;
         }
         [HttpGet]
         [Route("api/RouletteEntry/RetrieveCoolNumber")]
-        public Numbers[] RetrieveCoolNumber()
+        public List<Numbers> RetrieveCoolNumber()
         {
+            List<Numbers> numbers = new List<Numbers>();
             var logs = _logRepository.Find().ToList();
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
             var coolNumbers = lastHundredLogs.GroupBy(c => c.NumberId).OrderBy(c => c.Count()).Take(4).ToList();
-            Numbers[] numbers = { coolNumbers[0].ElementAt(0).Number, coolNumbers[1].ElementAt(0).Number, coolNumbers[2].ElementAt(0).Number, coolNumbers[3].ElementAt(0).Number };
+            foreach (var coolNumber in coolNumbers)
+            {
+                numbers.Add(coolNumber.First().Number);
+            }
             return numbers;
 
         }
@@ -52,11 +60,18 @@ namespace Roulette.Controllers
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
-            var colorGroups = lastHundredLogs.GroupBy(c => c.Number.ColorId).OrderBy(c => c.Count()).ToList();
             IDictionary<string, float> colorStats = new Dictionary<string, float>();
-            colorStats[colorGroups[0].ElementAt(0).Number.Color.Name] = (colorGroups[0].Count()*100)/(colorGroups[0].Count()+ colorGroups[1].Count());
-            colorStats[colorGroups[1].ElementAt(0).Number.Color.Name] = 100- colorStats[colorGroups[0].ElementAt(0).Number.Color.Name];
-            return colorStats;
+            if (lastHundredLogs.Count() > 1)
+            {
+                var blackCount = lastHundredLogs.Count(lhl=>lhl.Number.Color.Name=="Black");
+                var redCount = lastHundredLogs.Count(lhl=>lhl.Number.Color.Name=="Red");
+                if ((blackCount + redCount) > 0)
+                {
+                    colorStats["Black"] = (blackCount * 100) / (blackCount + redCount);
+                    colorStats["Red"] = 100 - colorStats["Black"];
+                }
+            }
+           return colorStats;
 
         }
         [HttpGet]
@@ -67,10 +82,18 @@ namespace Roulette.Controllers
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
-            var oddEvenGroups = lastHundredLogs.GroupBy(c => c.Number.OddEvenFactor).OrderBy(c => c.Count()).ToList();
             IDictionary<string, int> oddEvenStats = new Dictionary<string, int>();
-            oddEvenStats[oddEvenGroups[0].ElementAt(0).Number.OddEvenFactor] = (oddEvenGroups[0].Count() * 100) / (oddEvenGroups[0].Count() + oddEvenGroups[1].Count());
-            oddEvenStats[oddEvenGroups[1].ElementAt(0).Number.OddEvenFactor] = 100- oddEvenStats[oddEvenGroups[0].ElementAt(0).Number.OddEvenFactor];
+            if (lastHundredLogs.Count() > 1)
+            {
+                var evenCount = lastHundredLogs.Count(lhl=>lhl.Number.OddEvenFactor=="Even");
+                var OddCount = lastHundredLogs.Count(lhl=>lhl.Number.OddEvenFactor=="Odd");
+                if ((evenCount + OddCount) > 0)
+                {
+                    oddEvenStats["Even"] = (evenCount * 100) / (evenCount + OddCount);
+                    oddEvenStats["Odd"] = 100 - oddEvenStats["Even"];
+
+                }
+            }
             return oddEvenStats;
 
         }

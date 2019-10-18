@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201910120512382_Populate Database.Designer.cs">
       <DependentUpon>201910120512382_Populate Database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910181257247_allocate oddeven factor to zero.cs" />
+    <Compile Include="Migrations\201910181257247_allocate oddeven factor to zero.Designer.cs">
+      <DependentUpon>201910181257247_allocate oddeven factor to zero.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910120512382_Populate Database.resx">
       <DependentUpon>201910120512382_Populate Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910181257247_allocate oddeven factor to zero.resx">
+      <DependentUpon>201910181257247_allocate oddeven factor to zero.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
