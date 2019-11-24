@@ -21,7 +21,7 @@ namespace Roulette.DataAccess
 
             var objectContext = (this as IObjectContextAdapter).ObjectContext;
             objectContext.CommandTimeout = 100;
-
+            objectContext.Connection.Close();
         }
         public override int SaveChanges()
         {

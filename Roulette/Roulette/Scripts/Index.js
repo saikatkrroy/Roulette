@@ -10,6 +10,7 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.BetPlaced = false;
     $scope.ActionFailed = false;
     $scope.NumberLoadFailed = false;
+    $scope.Clicked = 0;
     $http.get('/api/RouletteEntry/RetrieveNumbers')
         .then(function successCallback(response) {
             if (response.data == null)
@@ -21,13 +22,16 @@ app.controller("HomeController", function ($scope, $http) {
                 var data = response.Data;
             });
     PlaceYourBet = function () {
-        $http.post('/api/RouletteEntry/CreateUserInput', $scope.bet).then(
-            function successCallback(response) {
-                if (response.status == 204)
-                    $scope.BetPlaced = true;
-            },
-            function failureCallback(response) {
-                $scope.ActionFailed = true;
-            });
+        if ($scope.Clicked==0) {
+            $http.post('/api/RouletteEntry/CreateUserInput', $scope.bet).then(
+                function successCallback(response) {
+                    if (response.status == 204)
+                        $scope.BetPlaced = true;
+                },
+                function failureCallback(response) {
+                    $scope.ActionFailed = true;
+                });
+        }
+        $scope.Clicked += 1;
     }
 });

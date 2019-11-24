@@ -22,7 +22,9 @@ namespace Roulette.DataAccess.Services
 
         public IQueryable<T> Find()
         {
-            return _set.AsQueryable();
+            var result=_set.AsQueryable();
+            _context.SaveChanges();
+            return result;
         }
 
         public IQueryable<T> FindReadOnly()

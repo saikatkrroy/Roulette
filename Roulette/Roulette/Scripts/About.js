@@ -12,7 +12,7 @@ app.controller("HomeController", function ($scope, $http) {
 
     $http.get('/api/RouletteEntry/RetrieveOddEvenStats')
         .then(function successCallback(response) {
-            if (response.data.length == undefined)
+            if (response.data.Odd == undefined && response.data.Even == undefined)
                 $scope.OddEvenStatsFailure = true;
             else
                 $scope.OddEvenStats = JSON.parse(JSON.stringify(response.data));
@@ -22,7 +22,7 @@ app.controller("HomeController", function ($scope, $http) {
             });
     $http.get('/api/RouletteEntry/RetrieveColorStats')
         .then(function successCallback(response) {
-            if (response.data.length == undefined)
+            if (response.data.Black == undefined && response.data.Red == undefined)
                 $scope.ColorStatsFailure = true;
             else
                 $scope.ColorStats = JSON.parse(JSON.stringify(response.data));

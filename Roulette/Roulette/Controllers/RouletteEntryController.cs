@@ -13,11 +13,17 @@ namespace Roulette.Controllers
         IRepository<Logs> _logRepository { get; set; }
         IRepository<Numbers> _numberRepository { get; set; }
         IUnitOfWork _unitofWork { get; set; }
-        public RouletteEntryController()
+        //public RouletteEntryController()
+        //{
+        //    _logRepository =new Repository<Logs>(new RouletteDbContext());
+        //    _numberRepository = new Repository<Numbers>(new RouletteDbContext());
+        //    _unitofWork = new UnitOfWork(new RouletteDbContext());
+        //}
+        public RouletteEntryController(IRepository<Logs> logRepository,IRepository<Numbers> numberRepository, IUnitOfWork unitOfWork)
         {
-            _logRepository =new Repository<Logs>(new RouletteDbContext());
-            _numberRepository = new Repository<Numbers>(new RouletteDbContext());
-            _unitofWork = new UnitOfWork(new RouletteDbContext());
+            _logRepository = logRepository;
+            _numberRepository = numberRepository;
+            _unitofWork = unitOfWork;
         }
         [HttpGet]
         [Route("api/RouletteEntry/RetrieveHotNumber")]
@@ -61,7 +67,7 @@ namespace Roulette.Controllers
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
             IDictionary<string, float> colorStats = new Dictionary<string, float>();
-            if (lastHundredLogs.Count() > 1)
+            if (lastHundredLogs.Count() > 0)
             {
                 var blackCount = lastHundredLogs.Count(lhl=>lhl.Number.Color.Name=="Black");
                 var redCount = lastHundredLogs.Count(lhl=>lhl.Number.Color.Name=="Red");
@@ -83,7 +89,7 @@ namespace Roulette.Controllers
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
             IDictionary<string, int> oddEvenStats = new Dictionary<string, int>();
-            if (lastHundredLogs.Count() > 1)
+            if (lastHundredLogs.Count() > 0)
             {
                 var evenCount = lastHundredLogs.Count(lhl=>lhl.Number.OddEvenFactor=="Even");
                 var OddCount = lastHundredLogs.Count(lhl=>lhl.Number.OddEvenFactor=="Odd");
@@ -114,7 +120,7 @@ namespace Roulette.Controllers
             {
                 NumberId=number.Id
             };
-            _logRepository.InsertAndSave(log);
+            _logRepository.Insert(log);
             _unitofWork.SaveChanges();
         }
     }

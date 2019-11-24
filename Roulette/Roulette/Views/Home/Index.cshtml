@@ -12,13 +12,14 @@
             <form onsubmit="PlaceYourBet()">
                 <p>Enter your Bet:</p>
                 <p style="color:red" ng-show="NumberLoadFailed"> Failed to load numbers</p>
-                <select ng-model="bet" ng-show="!NumberLoadFailed">
+                <select ng-model="bet" ng-show="!NumberLoadFailed" ng-change="Clicked = 0">
                     <option value="">Please choose...</option>
                     <option ng-repeat="number in Numbers" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
                    
                 </select>
                 <p>Your bet is <span ng-bind="bet"></span>.</p>
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
+                <p ng-show="Clicked>1" style="color:red">You have already placed your bet.</p>
             </form>
             <p ng-show="BetPlaced">Your Bet is Placed</p>
             <p ng-show="ActionFailed">Failed to place your bet</p>

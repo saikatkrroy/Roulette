@@ -2,6 +2,7 @@ using Roulette.DataAccess;
 using Roulette.DataAccess.Interfaces;
 using Roulette.DataAccess.Models;
 using Roulette.DataAccess.Services;
+using System.Data.Entity;
 using System.Web.Http;
 using Unity;
 using Unity.Injection;
@@ -17,7 +18,8 @@ namespace Roulette
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-            container.RegisterType<RouletteDbContext>(new InjectionFactory(c => new RouletteDbContext()));
+            //container.RegisterType<RouletteDbContext>(new InjectionFactory(c => new RouletteDbContext()));
+            container.RegisterInstance<DbContext>(new RouletteDbContext());
             container.RegisterType<IRepository<Colors>, Repository<Colors>>();
             container.RegisterType<IRepository<Numbers>, Repository<Numbers>>();
             container.RegisterType<IRepository<Logs>, Repository<Logs>>();
