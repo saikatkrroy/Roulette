@@ -89,6 +89,7 @@
     <Compile Include="Models\Logs.cs" />
     <Compile Include="Models\Numbers.cs" />
     <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\UserSessions.cs" />
     <Compile Include="RouletteDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Repository.cs" />

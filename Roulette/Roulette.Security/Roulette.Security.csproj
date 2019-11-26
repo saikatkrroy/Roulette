@@ -46,6 +46,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountServices.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Roulette.DataAccess\Roulette.DataAccess.csproj">
+      <Project>{34B78BEB-7E3E-4D12-B95B-D79864F08827}</Project>
+      <Name>Roulette.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
