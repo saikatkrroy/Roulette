@@ -25,6 +25,8 @@ namespace Roulette
             container.RegisterType<IRepository<Colors>, Repository<Colors>>();
             container.RegisterType<IRepository<Numbers>, Repository<Numbers>>();
             container.RegisterType<IRepository<Logs>, Repository<Logs>>();
+            container.RegisterType<IRepository<Users>, Repository<Users>>();
+            container.RegisterType<IRepository<UserSessions>, Repository<UserSessions>>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<IAccountServices, AccountServices>();
             container.ResolveAll<IRepository<Colors>>();

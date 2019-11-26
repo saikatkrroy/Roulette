@@ -1,14 +1,14 @@
 ﻿using Roulette.DataAccess.Interfaces;
 using Roulette.DataAccess.Models;
+using Roulette.Security.Helpers;
 using Roulette.Security.Interfaces;
 using Roulette.Security.Models;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Roulette.Security.Services
 {
@@ -41,28 +41,44 @@ namespace Roulette.Security.Services
 
         public UserSessions CreateNewUserSession(LoginModel user)
         {
-            throw new NotImplementedException();
+            string token = CreateRandomToken();
+            string tokenSalt = string.Empty;
+
+            //use User create timestamp and web.config secret key to encrypt newly created token (guids...)
+            string tokenEncryptKey = DateTime.Now + ConfigurationManager.AppSettings["ENCRYPT_LINK_KEY"];
+            string encryptedToken = AesEncryptionHelper.Encrypt(token, tokenEncryptKey, ref tokenSalt);
+
+            // use newly created token (guids...) and web.config secret to encrypt session id, use same salt as used by token
+            string sessionCookieEncryptKey = token + ":" + ConfigurationManager.AppSettings["ENCRYPT_LINK_KEY"];
+            string doubleSubmitSessionCookie = AesEncryptionHelper.Encrypt(Guid.NewGuid().ToString(), sessionCookieEncryptKey, ref tokenSalt);
+
+            var userSession = new UserSessions
+            {
+                User = new Users() { UserName=user.Username,Password=user.Password},
+                AuthToken = encryptedToken.Base64ToBase64URL(),  //since we may use this authToken in a URL later, let's make sure it's URL safe.
+                AuthExpiration = DateTime.UtcNow.AddMinutes(12*60),
+                IsExpired = false,
+                HardAbsoluteExpirationTime = DateTime.UtcNow.AddMinutes(12*60),
+                AuthTokenSalt = tokenSalt,
+                AuthDoubleSubmitSessionIdCookie = doubleSubmitSessionCookie,
+            };
+            return userSession;
         }
 
-        public void DeleteExpiredSessions()
-        {
-            throw new NotImplementedException();
-        }
 
         public string GetAuthTokenForProxyUser(Users user)
         {
-            throw new NotImplementedException();
+
+            var userSession = CreateNewUserSession(new LoginModel() { Username = user.UserName, Password = user.Password });
+            _userSessionRepository.Insert(userSession);
+
+            return userSession.AuthToken;
         }
 
         public string HashPassword(string password, string salt)
         {
             var bytes = Encoding.UTF8.GetBytes(password + salt);
             return Convert.ToBase64String(new SHA256Managed().ComputeHash(bytes));
-        }
-
-        public bool IsResetTokenValid(string resetToken)
-        {
-            throw new NotImplementedException();
         }
 
         public string Login(LoginModel loginModel)
@@ -82,13 +98,15 @@ namespace Roulette.Security.Services
 
         public void Logoff(string authToken)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(authToken))
+            {
+                throw new Exception("Invalid AuthToken");
+            }
+            var userSession = _userSessionRepository.EnsureFindSingle(u => u.AuthToken == authToken);
+            _userSessionRepository.Delete(userSession);
+            _unitOfWork.SaveChanges();
         }
 
-        public void UpdatePassword(Users user, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
         public void ValidateUserNameAndPassword(string username, string password, bool isEmailUsername = true)
         {
             ValidateUserName(username, isEmailUsername);
@@ -123,13 +141,11 @@ namespace Roulette.Security.Services
         }
         private string HandleLoginRequest(Users user, string password)
         {
-            //BUGBUG: Repeat code - found in Recruiting Setup HandleLoginRequest
             ValidateLogin(user, password);
 
             var userSession = CreateNewUserSession(new LoginModel() { Username=user.UserName, Password=user.Password});
 
             _userSessionRepository.Insert(userSession);
-            _usersRepository.Update(user);
 
             return userSession.AuthToken;
         }

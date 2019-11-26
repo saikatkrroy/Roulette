@@ -8,9 +8,6 @@ namespace Roulette.Security.Interfaces
     {
         UserSessions CreateNewUserSession(LoginModel user);
         Users CreateNewUser(LoginModel person, bool isEmailUsername = true);
-        bool IsResetTokenValid(string resetToken);
-        void DeleteExpiredSessions();
-        void UpdatePassword(Users user, string newPassword);
         void Logoff(string authToken);
         string GetAuthTokenForProxyUser(Users user);
         string Login(LoginModel loginModel);

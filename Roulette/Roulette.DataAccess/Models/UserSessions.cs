@@ -6,7 +6,6 @@ namespace Roulette.DataAccess.Models
     {
         public string AuthToken { get; set; }
         public DateTime? AuthExpiration { get; set; }
-        public string WkflowToken { get; set; }
         public int UserId { get; set; }
         public virtual Users User { get; set; }
         public string AuthTokenSalt { get; set; }
