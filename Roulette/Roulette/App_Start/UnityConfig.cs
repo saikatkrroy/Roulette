@@ -2,6 +2,8 @@ using Roulette.DataAccess;
 using Roulette.DataAccess.Interfaces;
 using Roulette.DataAccess.Models;
 using Roulette.DataAccess.Services;
+using Roulette.Security.Interfaces;
+using Roulette.Security.Services;
 using System.Data.Entity;
 using System.Web.Http;
 using Unity;
@@ -24,6 +26,7 @@ namespace Roulette
             container.RegisterType<IRepository<Numbers>, Repository<Numbers>>();
             container.RegisterType<IRepository<Logs>, Repository<Logs>>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IAccountServices, AccountServices>();
             container.ResolveAll<IRepository<Colors>>();
             container.ResolveAll<IRepository<Numbers>>();
             container.ResolveAll<IRepository<Logs>>();

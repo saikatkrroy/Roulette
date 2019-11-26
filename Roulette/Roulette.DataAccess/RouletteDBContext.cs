@@ -15,6 +15,7 @@ namespace Roulette.DataAccess
         public DbSet<Colors> Colors { get; set; }
         public DbSet<Numbers> Numbers { get; set; }
         public DbSet<Logs> Logs { get; set; }
+        public DbSet<Users> Users { get; set; }
         public RouletteDbContext()
             : base("Name=RouletteDbContext")
         {
