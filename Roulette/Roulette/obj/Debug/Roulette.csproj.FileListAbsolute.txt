@@ -396,3 +396,6 @@ F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.csproj.CoreCompileInputs
 F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.csproj.CopyComplete
 F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.dll
 F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.pdb
+F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.dll
+F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.pdb
+F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.dll.config

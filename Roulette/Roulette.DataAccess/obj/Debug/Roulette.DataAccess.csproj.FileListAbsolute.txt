@@ -53,3 +53,4 @@ F:\Upwork\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.cs
 F:\Upwork\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.csproj.CopyComplete
 F:\Upwork\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.dll
 F:\Upwork\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.pdb
+F:\Upwork\Roulette\Roulette\Roulette.DataAccess\obj\Debug\Roulette.DataAccess.Migrations.Adduserloginmodel.resources
