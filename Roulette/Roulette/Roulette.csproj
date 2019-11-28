@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RouletteEntryController.cs" />
     <Compile Include="Global.asax.cs">
@@ -228,6 +229,10 @@
     <ProjectReference Include="..\Roulette.DataAccess\Roulette.DataAccess.csproj">
       <Project>{34b78beb-7e3e-4d12-b95b-d79864f08827}</Project>
       <Name>Roulette.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Roulette.Security\Roulette.Security.csproj">
+      <Project>{1E7A8C2D-1157-4A87-A8A1-60D9BD33E043}</Project>
+      <Name>Roulette.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
