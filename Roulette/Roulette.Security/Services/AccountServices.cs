@@ -36,6 +36,8 @@ namespace Roulette.Security.Services
                 PasswordSalt = salt,
                 Password = pwdHash,
             };
+            _usersRepository.InsertAndSave(user);
+            //_unitOfWork.SaveChanges();
             return user;
         }
 

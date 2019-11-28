@@ -9,6 +9,7 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.ColorStatsFailure = false;
     $scope.HotNumberFailure = false;
     $scope.CoolNumberFailure = false;
+    $scope.ZeroFailure = false;
 
     $http.get('/api/RouletteEntry/RetrieveOddEvenStats')
         .then(function successCallback(response) {
@@ -49,6 +50,16 @@ app.controller("HomeController", function ($scope, $http) {
         },
             function failureCallback(response) {
                 $scope.HotNumberFailure = true;
+        });
+    $http.get('/api/RouletteEntry/RetrieveZeroPercentage')
+        .then(function successCallback(response) {
+            if (response.data.Zero == 0)
+                $scope.ZeroFailure = true;
+            else
+                $scope.Zero = JSON.parse(JSON.stringify(response.data));
+        },
+            function failureCallback(response) {
+                $scope.ZeroFailure = true;
 
-            });
+        });
     });

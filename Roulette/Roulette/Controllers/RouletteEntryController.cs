@@ -101,7 +101,23 @@ namespace Roulette.Controllers
                 }
             }
             return oddEvenStats;
+        }
+        [HttpGet]
+        [Route("api/RouletteEntry/RetrieveZeroPercentage")]
+        public IDictionary<string, int> RetrieveZeroPercentage()
+        {
+            var logs = _logRepository.Find().ToList();
+            IDictionary<string, int> zeroPercentage = new Dictionary<string, int>();
 
+            var lastHundredLogs = (from log in logs
+                                   orderby log.Id descending
+                                   select log).Take(100).ToList();
+            if (lastHundredLogs.Count() > 0)
+            {
+                var zeroCount = lastHundredLogs.Count(lhl => lhl.Number.Number=="0");
+                zeroPercentage["Zero"] = ((zeroCount*100)/lastHundredLogs.Count);
+            }
+            return zeroPercentage;
         }
         [HttpGet]
         [Route("api/RouletteEntry/RetrieveNumbers")]
