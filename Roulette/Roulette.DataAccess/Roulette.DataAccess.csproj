@@ -91,6 +91,10 @@
     <Compile Include="Migrations\201912010017054_add RouletteEvents.Designer.cs">
       <DependentUpon>201912010017054_add RouletteEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912010135395_Populate RouletteEvents.cs" />
+    <Compile Include="Migrations\201912010135395_Populate RouletteEvents.Designer.cs">
+      <DependentUpon>201912010135395_Populate RouletteEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -129,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912010017054_add RouletteEvents.resx">
       <DependentUpon>201912010017054_add RouletteEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912010135395_Populate RouletteEvents.resx">
+      <DependentUpon>201912010135395_Populate RouletteEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
