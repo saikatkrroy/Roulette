@@ -1,0 +1,16 @@
+.idea
+.DS_Store
+Cogstate.Platform/.nuget/NuGet.exe
+Cogstate.Platform/Cogstate.WebServices/App_Data/Cogstate.Models.XML
+Cogstate.Platform/Cogstate.WebServices/App_Data/Cogstate.WebServices.XML
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+*.orig
+.vs/
+
+# NuGet Packages Directory
+# packages/*
+**/packages/**
