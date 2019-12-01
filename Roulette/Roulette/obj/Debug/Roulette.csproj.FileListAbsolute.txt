@@ -350,6 +350,7 @@ F:\Upwork\Roulette\Roulette\Roulette\bin\Microsoft.Practices.ServiceLocation.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\Microsoft.Web.Infrastructure.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\Newtonsoft.Json.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.DataAccess.dll
+F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\System.Data.SqlClient.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\System.Net.Http.Formatting.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\System.Runtime.CompilerServices.Unsafe.dll
@@ -369,6 +370,8 @@ F:\Upwork\Roulette\Roulette\Roulette\bin\Unity.WebApi.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\WebGrease.dll
 F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.DataAccess.pdb
 F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.DataAccess.dll.config
+F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.pdb
+F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.dll.config
 F:\Upwork\Roulette\Roulette\Roulette\bin\EntityFramework.xml
 F:\Upwork\Roulette\Roulette\Roulette\bin\EntityFramework.SqlServer.xml
 F:\Upwork\Roulette\Roulette\Roulette\bin\Microsoft.Practices.ServiceLocation.pdb
@@ -396,6 +399,3 @@ F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.csproj.CoreCompileInputs
 F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.csproj.CopyComplete
 F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.dll
 F:\Upwork\Roulette\Roulette\Roulette\obj\Debug\Roulette.pdb
-F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.dll
-F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.pdb
-F:\Upwork\Roulette\Roulette\Roulette\bin\Roulette.Security.dll.config

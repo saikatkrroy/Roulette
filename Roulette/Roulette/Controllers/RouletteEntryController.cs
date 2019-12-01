@@ -2,6 +2,7 @@
 using Roulette.DataAccess.Interfaces;
 using Roulette.DataAccess.Models;
 using Roulette.DataAccess.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -12,6 +13,8 @@ namespace Roulette.Controllers
     {
         IRepository<Logs> _logRepository { get; set; }
         IRepository<Numbers> _numberRepository { get; set; }
+        IRepository<UserSessions> _userSessionRepository { get; set; }
+        IRepository<RouletteEvents> _rouletteEventsRepository { get; set; }
         IUnitOfWork _unitofWork { get; set; }
         //public RouletteEntryController()
         //{
@@ -19,10 +22,16 @@ namespace Roulette.Controllers
         //    _numberRepository = new Repository<Numbers>(new RouletteDbContext());
         //    _unitofWork = new UnitOfWork(new RouletteDbContext());
         //}
-        public RouletteEntryController(IRepository<Logs> logRepository,IRepository<Numbers> numberRepository, IUnitOfWork unitOfWork)
+        public RouletteEntryController(IRepository<Logs> logRepository,
+            IRepository<Numbers> numberRepository,
+            IRepository<UserSessions> userSessionRepository,
+            IRepository<RouletteEvents> rouletteEventsRepository,
+            IUnitOfWork unitOfWork)
         {
             _logRepository = logRepository;
             _numberRepository = numberRepository;
+            _userSessionRepository = userSessionRepository;
+            _rouletteEventsRepository = rouletteEventsRepository;
             _unitofWork = unitOfWork;
         }
         [HttpGet]
@@ -30,7 +39,7 @@ namespace Roulette.Controllers
         public List<Numbers> RetrieveHotNumber()
         {
             List<Numbers> numbers = new List<Numbers>();
-            var logs = _logRepository.Find().ToList();
+            var logs = _logRepository.Find();
             var lastHundredLogs = (from log in logs
                                            orderby log.Id descending
                                            select log).Take(100).ToList();
@@ -46,7 +55,7 @@ namespace Roulette.Controllers
         public List<Numbers> RetrieveCoolNumber()
         {
             List<Numbers> numbers = new List<Numbers>();
-            var logs = _logRepository.Find().ToList();
+            var logs = _logRepository.Find();
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
@@ -62,7 +71,8 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/RetrieveColorStats")]
         public IDictionary<string,float> RetrieveColorStats()
         {
-            var logs = _logRepository.Find().ToList();
+            var logs = _logRepository.Find();
+            var loglist = logs.ToList();
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
@@ -84,7 +94,7 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/RetrieveOddEvenStats")]
         public IDictionary<string,int> RetrieveOddEvenStats()
         {
-            var logs = _logRepository.Find().ToList();
+            var logs = _logRepository.Find();
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
@@ -106,7 +116,7 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/RetrieveZeroPercentage")]
         public IDictionary<string, int> RetrieveZeroPercentage()
         {
-            var logs = _logRepository.Find().ToList();
+            var logs = _logRepository.Find();
             IDictionary<string, int> zeroPercentage = new Dictionary<string, int>();
 
             var lastHundredLogs = (from log in logs
@@ -129,14 +139,53 @@ namespace Roulette.Controllers
         }
         [HttpPost]
         [Route("api/RouletteEntry/CreateUserInput")]
-        public void CreateUserInput([FromBody]string value)
+        public void CreateUserInput([FromBody]string value,string authToken,string rouletteEventName,double betPlaced)
         {
+            var userSession=_userSessionRepository.Find(us => us.AuthToken == authToken).Single();
+            if (userSession == null)
+                throw new Exception("Invalid User");
+
             var number = _numberRepository.FindSingleOrNull(n => n.Number == value);
+            var rouletteEvent = _rouletteEventsRepository.Find(r =>r.EventName== rouletteEventName).Single();
             var log = new Logs()
             {
-                NumberId=number.Id
+                NumberId=number.Id,
+                Number=number,
+                User=userSession.User,
+                UserId=userSession.User.Id,
+                RouletteEvent=rouletteEvent,
+                RouletteEventId= rouletteEvent.Id,
+                BetPlaced= betPlaced
             };
             _logRepository.Insert(log);
+            _unitofWork.SaveChanges();
+        }
+        [HttpPut]
+        [Route("api/RouletteEntry/UpdateUserInput")]
+        public void UpdateUserInput([FromBody]string value,int existingEntry,string authToken)
+        {
+            var userSession = _userSessionRepository.Find(us => us.AuthToken == authToken).Single();
+            if (userSession == null)
+                throw new Exception("Invalid User");
+            var logList = _logRepository.Find(l=>l.NumberId==existingEntry && l.UserId==userSession.UserId);
+            var log = logList.ElementAt(logList.Count()-1);
+            var number = _numberRepository.FindSingleOrNull(n => n.Number == value);
+            log.Number = number;
+            log.NumberId = number.Id;
+            _logRepository.Update(log);
+            _unitofWork.SaveChanges();
+        }
+        [HttpDelete]
+        [Route("api/RouletteEntry/DeleteUserInput")]
+        public void DeleteUserInput([FromBody]int existingEntry, string authToken)
+        {
+            var userSession = _userSessionRepository.Find(us => us.AuthToken == authToken).Single();
+            if (userSession == null)
+                throw new Exception("Invalid User");
+            var logList = _logRepository.Find(l => l.NumberId == existingEntry && l.UserId == userSession.UserId);
+            var log = logList.ElementAt(logList.Count() - 1);
+            
+            _logRepository.Delete(log);
             _unitofWork.SaveChanges();
         }
     }

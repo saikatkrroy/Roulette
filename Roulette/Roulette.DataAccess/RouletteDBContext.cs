@@ -15,6 +15,7 @@ namespace Roulette.DataAccess
         public DbSet<Colors> Colors { get; set; }
         public DbSet<Numbers> Numbers { get; set; }
         public DbSet<Logs> Logs { get; set; }
+        public DbSet<RouletteEvents> RouletteEvents { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<UserSessions> UserSessions { get; set; }
         public RouletteDbContext()
@@ -23,7 +24,6 @@ namespace Roulette.DataAccess
 
             var objectContext = (this as IObjectContextAdapter).ObjectContext;
             objectContext.CommandTimeout = 100;
-            objectContext.Connection.Close();
         }
         public override int SaveChanges()
         {
@@ -41,7 +41,6 @@ namespace Roulette.DataAccess
                         UpdateCreateAndLastMaintDates(dbEntry, userIdStr);
                     }
 
-                    // todo - temporary fix until we merge in Alan's optimizations 
                     ChangeTracker.DetectChanges();
                 }
 
@@ -50,6 +49,8 @@ namespace Roulette.DataAccess
             finally
             {
                 Configuration.AutoDetectChangesEnabled = autoDetectChangesValue;
+
+                //objectContext.Connection.Close();
             }
         }
         private string UserIdStr

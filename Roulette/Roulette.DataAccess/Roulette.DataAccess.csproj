@@ -87,12 +87,18 @@
     <Compile Include="Migrations\201911271150568_Add user login model.Designer.cs">
       <DependentUpon>201911271150568_Add user login model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912010017054_add RouletteEvents.cs" />
+    <Compile Include="Migrations\201912010017054_add RouletteEvents.Designer.cs">
+      <DependentUpon>201912010017054_add RouletteEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
     <Compile Include="Models\Logs.cs" />
     <Compile Include="Models\Numbers.cs" />
+    <Compile Include="Models\RouletteEvents.cs" />
     <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\UserSessionLog.cs" />
     <Compile Include="Models\UserSessions.cs" />
     <Compile Include="RouletteDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911271150568_Add user login model.resx">
       <DependentUpon>201911271150568_Add user login model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912010017054_add RouletteEvents.resx">
+      <DependentUpon>201912010017054_add RouletteEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
