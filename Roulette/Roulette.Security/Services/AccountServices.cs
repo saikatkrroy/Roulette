@@ -27,6 +27,9 @@ namespace Roulette.Security.Services
         }
         public Users CreateNewUser(LoginModel person, bool isEmailUsername = true)
         {
+            var userSearch = _usersRepository.Find(u => u.UserName == person.Username);
+            if (userSearch.Count() != 0)
+                throw new Exception("Username already exists");
             ValidateUserNameAndPassword(person.Username, person.Password, isEmailUsername);
             string salt = CreateRandomToken();
             string pwdHash = HashPassword(person.Password, salt);
@@ -93,7 +96,6 @@ namespace Roulette.Security.Services
             }
             var authToken = HandleLoginRequest(user, loginModel.Password);
 
-            _unitOfWork.SaveChanges();
 
             return authToken;
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Roulette.Controllers
 {
@@ -19,15 +20,21 @@ namespace Roulette.Controllers
         }
         [HttpPost]
         [Route("api/Account/Login")]
-        public string Login(LoginModel loginModel)
+        public object Login(LoginModel loginModel)
         {
-            return _accountServices.Login(loginModel);
+            var authToken=_accountServices.Login(loginModel);
+            string host = System.Web.HttpContext.Current.Request.Url.Authority;
+            var url = "http://" + host + "/Home/Index";
+            return Request.CreateResponse(HttpStatusCode.OK,new { RedirectUrl=url,AuthToken=authToken});
         }
         [HttpPost]
         [Route("api/Account/Logoff")]
-        public void Logoff(string authToken)
+        public object Logoff(string authToken)
         {
             _accountServices.Logoff(authToken);
+            string host = System.Web.HttpContext.Current.Request.Url.Authority;
+            var url = "http://" + host + "/Login/Index";
+            return Request.CreateResponse(HttpStatusCode.OK, new { RedirectUrl = url });
         }
         [HttpPost]
         [Route("api/Account/CreateNewUser")]

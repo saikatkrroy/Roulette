@@ -1,8 +1,76 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
+    <script src="~/Scripts/Login.js"></script>
+</head>
 
+
+<div class="row">
+    <div class="col-md-4">
+        <div ng-app="Roulette" ng-controller="HomeController" ng-cloak>
+            <h2 ng-show="createNewUser">Create New User</h2>
+            <h2 ng-show="!createNewUser">Login</h2>
+            <div class="offset1 span11">
+                <div class="row-fluid  form-horizontal">
+                    <div class="span12">
+                        <div class="controls" ng-show="createNewUser">
+                            <input type="button" value="Login" ng-click="createNewUser=false" />
+                        </div>
+                        <div class="controls" ng-show="!createNewUser">
+                            <input type="button" value="Create New User" ng-click="createNewUser=true" />
+                        </div>
+                        <form onsubmit="Login()" ng-show="!createNewUser">
+                            <div class="control-group">
+                                <label for="txtUserId" class="control-label">User ID</label>
+                                <div class="controls">
+                                    <input name="txtUserId" type="text" ng-model="userId" maxlength="255" id="txtuserId">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="txtPassword" class="control-label">Password</label>
+                                <div class="controls">
+                                    <input name="txtPassword" type="password" ng-model="password" maxlength="255" id="txtPassword">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="submit" value="Login" ng-click="Login()" />
+                                </div>
+                            </div>
+                        </form>
+                        <p ng-show="LoginFailed" class="text-danger">Invalid Username or Password</p>
+                        <div class="control-group">
+
+                            <form onsubmit="CreateNewUser()" ng-show="createNewUser">
+                                <div class="control-group">
+                                    <label for="txtUserIdnew" class="control-label">User ID</label>
+                                    <div class="controls">
+                                        <input name="txtUserIdnew" type="text" ng-model="userIdNew" maxlength="255" id="txtuserIdnew">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="txtPasswordnew" class="control-label">Password</label>
+                                    <div class="controls">
+                                        <input name="txtPasswordnew" type="password" ng-model="passwordNew" maxlength="255" id="txtPasswordnew">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input type="submit" value="Create" ng-click="CreateNewUser()" />
+                                    </div>
+                                </div>
+                            </form>
+                            <p ng-show="userCreated">User Created</p>
+                            <p ng-show="userCreationFailed" class="text-danger">Please check your Username and Password</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
