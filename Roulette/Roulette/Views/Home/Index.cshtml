@@ -3,19 +3,21 @@
 }
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
+    @*<script src="~/Scripts/Login.js"></script>*@
     <script src="~/Scripts/Index.js"></script>
 </head>
 
 <div class="row">
     <div class="col-md-4" >
-        <div ng-app = "Roulette" ng-controller="HomeController" ng-cloak>
-            <form onsubmit="PlaceYourBet()">
+        <div ng-app="Roulette" ng-controller="HomeController" ng-cloak>
+            <p ng-show="UpdateUserInput">Please enter your new bet here</p>
+            <form onsubmit="PlaceYourBet()" >
                 <p>Enter your Bet:</p>
                 <p style="color:red" ng-show="NumberLoadFailed"> Failed to load numbers</p>
                 <select ng-model="bet" ng-show="!NumberLoadFailed" ng-change="Clicked = 0">
                     <option value="">Please choose...</option>
                     <option ng-repeat="number in Numbers" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
-                   
+
                 </select>
                 <p>Your bet is <span ng-bind="bet"></span>.</p>
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
@@ -23,6 +25,8 @@
             </form>
             <p ng-show="BetPlaced">Your Bet is Placed</p>
             <p ng-show="ActionFailed">Failed to place your bet</p>
+            <input type="button" value="Update Placed Bet" ng-click="UpdateUserInput=true">
+
         </div>
     </div>
 </div>

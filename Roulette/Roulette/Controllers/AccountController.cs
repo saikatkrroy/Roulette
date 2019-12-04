@@ -1,4 +1,5 @@
 ﻿using Roulette.DataAccess.Models;
+using Roulette.Security.Helpers;
 using Roulette.Security.Interfaces;
 using Roulette.Security.Models;
 using System;
@@ -25,6 +26,7 @@ namespace Roulette.Controllers
             var authToken=_accountServices.Login(loginModel);
             string host = System.Web.HttpContext.Current.Request.Url.Authority;
             var url = "http://" + host + "/Home/Index";
+            Authorisation.AuthToken = authToken;
             return Request.CreateResponse(HttpStatusCode.OK,new { RedirectUrl=url,AuthToken=authToken});
         }
         [HttpPost]

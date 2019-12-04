@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\AesEncryptionHelper.cs" />
+    <Compile Include="Helpers\Authorisation.cs" />
     <Compile Include="Helpers\StringExtension.cs" />
     <Compile Include="Interfaces\IAccountServices.cs" />
     <Compile Include="Models\LoginModel.cs" />

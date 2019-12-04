@@ -10,12 +10,14 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.login = false;
     $scope.userCreated = false;
     $scope.userCreationFailed = false;
+    $scope.authToken = '';
     Login = function () {
         var loginModel = { "Username": $scope.userId, "Password": $scope.password };
         $http.post('/api/Account/Login', loginModel).then(
             function successCallback(response) {
                 if (response.status == 200) {
-                    var authToken = response.data.AuthToken;
+                    authToken = response.data.AuthToken;
+                    $scope.authToken = authToken;
                     window.location.href = response.data.RedirectUrl;
                 }
             },

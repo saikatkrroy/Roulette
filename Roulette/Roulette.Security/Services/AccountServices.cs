@@ -44,7 +44,7 @@ namespace Roulette.Security.Services
             return user;
         }
 
-        public UserSessions CreateNewUserSession(LoginModel user)
+        public UserSessions CreateNewUserSession(int id,LoginModel user)
         {
             string token = CreateRandomToken();
             string tokenSalt = string.Empty;
@@ -59,7 +59,7 @@ namespace Roulette.Security.Services
 
             var userSession = new UserSessions
             {
-                User = new Users() { UserName=user.Username,Password=user.Password},
+                UserId = id,
                 AuthToken = encryptedToken.Base64ToBase64URL(),  //since we may use this authToken in a URL later, let's make sure it's URL safe.
                 AuthExpiration = DateTime.UtcNow.AddMinutes(12*60),
                 IsExpired = false,
@@ -74,7 +74,7 @@ namespace Roulette.Security.Services
         public string GetAuthTokenForProxyUser(Users user)
         {
 
-            var userSession = CreateNewUserSession(new LoginModel() { Username = user.UserName, Password = user.Password });
+            var userSession = CreateNewUserSession(user.Id,new LoginModel() { Username = user.UserName, Password = user.Password });
             _userSessionRepository.Insert(userSession);
 
             return userSession.AuthToken;
@@ -147,10 +147,10 @@ namespace Roulette.Security.Services
         {
             ValidateLogin(user, password);
 
-            var userSession = CreateNewUserSession(new LoginModel() { Username=user.UserName, Password=user.Password});
+            var userSession = CreateNewUserSession(user.Id,new LoginModel() { Username=user.UserName, Password=user.Password});
 
             _userSessionRepository.Insert(userSession);
-
+            _unitOfWork.SaveChanges();
             return userSession.AuthToken;
         }
         protected void ValidateLogin(Users user, string password)

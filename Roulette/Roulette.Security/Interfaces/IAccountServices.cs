@@ -6,7 +6,7 @@ namespace Roulette.Security.Interfaces
 {
     public interface IAccountServices
     {
-        UserSessions CreateNewUserSession(LoginModel user);
+        UserSessions CreateNewUserSession(int id,LoginModel user);
         Users CreateNewUser(LoginModel person, bool isEmailUsername = true);
         void Logoff(string authToken);
         string GetAuthTokenForProxyUser(Users user);

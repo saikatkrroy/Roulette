@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roulette.Security.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,8 @@ namespace Roulette.Controllers
     {
         public ActionResult Index()
         {
+            if (Authorisation.AuthToken == null)
+                throw new Exception("Please Login to Continue");
             return View();
         }
 
