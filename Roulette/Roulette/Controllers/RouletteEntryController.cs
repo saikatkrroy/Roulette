@@ -157,7 +157,8 @@ namespace Roulette.Controllers
                 NumberId=number.Id,
                 UserId=userSession.User.Id,
                 RouletteEventId= rouletteEvent.Id,
-                BetPlaced= betModel.betPlaced
+                BetPlaced= betModel.betPlaced,
+                UserSessionLogId=Authorisation.UserSessionLogId
             };
             _logRepository.Insert(log);
             _unitofWork.SaveChanges();
@@ -170,21 +171,25 @@ namespace Roulette.Controllers
             if (userSession == null)
                 throw new Exception("Invalid User");
             var logList = _logRepository.Find(l => l.NumberId == existingEntry && l.UserId == userSession.UserId);
-            var log = logList.ElementAt(logList.Count() - 1);
+            var log = (from logs in logList
+                       orderby logs.Id descending
+                       select logs).Take(1).Single();
             var number = _numberRepository.FindSingleOrNull(n => n.Number == value.ToString());
             log.NumberId = number.Id;
             _logRepository.Update(log);
             _unitofWork.SaveChanges();
         }
         [HttpDelete]
-        [Route("api/RouletteEntry/DeleteUserInput")]
-        public void DeleteUserInput([FromBody]int existingEntry)
+        [Route("api/RouletteEntry/DeleteUserInput/{existingEntry}")]
+        public void DeleteUserInput([FromUri]string existingEntry)
         {
             var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
             if (userSession == null)
                 throw new Exception("Invalid User");
-            var logList = _logRepository.Find(l => l.NumberId == existingEntry && l.UserId == userSession.UserId);
-            var log = logList.ElementAt(logList.Count() - 1);
+            var logList = _logRepository.Find(l => l.Number.Number == existingEntry && l.UserId == userSession.UserId);
+            var log = (from logs in logList
+                       orderby logs.Id descending
+                       select logs).Take(1).Single();
 
             _logRepository.Delete(log);
             _unitofWork.SaveChanges();

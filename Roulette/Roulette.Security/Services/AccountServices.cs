@@ -5,6 +5,7 @@ using Roulette.Security.Interfaces;
 using Roulette.Security.Models;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,13 +17,17 @@ namespace Roulette.Security.Services
     {
         IRepository<Users> _usersRepository;
         IRepository<UserSessions> _userSessionRepository;
-        IUnitOfWork _unitOfWork;
+        IRepository<UserSessionLog> _userSessionLogRepository { get; set; }
+        IRepository<Logs> _logRepository { get; set; }
+        IUnitOfWork _unitOfWork { get; set; }
         private const string PASSWORD_VALIDATION_REGEX = @"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).{8,64}$";
 
-        public AccountServices(IRepository<Users> usersRepository, IRepository<UserSessions> userSessionRepository, IUnitOfWork unitOfWork)
+        public AccountServices(IRepository<Users> usersRepository, IRepository<UserSessions> userSessionRepository, IUnitOfWork unitOfWork, IRepository<UserSessionLog> userSessionLogRepository, IRepository<Logs> logRepository)
         {
             _usersRepository = usersRepository;
             _userSessionRepository = userSessionRepository;
+            _userSessionLogRepository = userSessionLogRepository;
+            _logRepository = logRepository;
             _unitOfWork = unitOfWork;
         }
         public Users CreateNewUser(LoginModel person, bool isEmailUsername = true)
@@ -106,7 +111,66 @@ namespace Roulette.Security.Services
             {
                 throw new Exception("Invalid AuthToken");
             }
-            var userSession = _userSessionRepository.EnsureFindSingle(u => u.AuthToken == authToken);
+
+            //Update UserSessionLogs for the current UserSession
+            var userSession = _userSessionRepository.Find(us => us.AuthToken == authToken).Single();
+            var logs = _logRepository.Find(l=>l.UserSessionLogs.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null).ToList();
+            if (logs.Count >= 0)
+            {
+                var userSessionLogId = logs.FirstOrDefault().UserSessionLogs.Id;
+                var userSessionLogs = _userSessionLogRepository.Find(l => l.Id == userSessionLogId).ToList();
+                userSessionLogs[0].LogOutTime = DateTime.Now;
+                _unitOfWork.SaveChanges();
+                //Resolve Filename for current usersession
+                var directory = System.AppDomain.CurrentDomain.BaseDirectory;
+                directory=directory.Substring(0, directory.LastIndexOf("Roulette\\"));
+                string filePath = "";
+
+                if (Directory.Exists(directory.ToString() + "UserBetReports"))
+                {
+                    if (Directory.Exists(directory.ToString() + "UserBetReports\\" + userSession.User.UserName))
+                    {
+                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(directory.ToString() + "UserBetReports\\" + userSession.User.UserName);
+                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
+                    }
+                }
+                else
+                {
+                    if (Directory.Exists(directory.ToString() + "UserBetReports\\" + userSession.User.UserName))
+                    {
+                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(directory.ToString() + "UserBetReports\\" + userSession.User.UserName);
+                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
+                    }
+                }
+                // Prepare the values
+                var allLines = (from log in logs
+                                select new Object[]
+                                {
+                                    log.User.UserName,
+                                    log.UserSessionLogs.LoginTime.ToString(),
+                                    log.UserSessionLogs.LogOutTime.ToString(),
+                                    log.BetPlaced.ToString(),
+                                    log.Number.Number.ToString(),
+                                    log.RouletteEvent.EventName.ToString()
+                                }).ToList();
+
+                // Build the file content
+                var csv = new StringBuilder();
+                allLines.ForEach(line =>
+                {
+                    csv.AppendLine(string.Join(",", line));
+                });
+                File.WriteAllText(filePath, csv.ToString());
+            }
+            //Remove current usersession
             _userSessionRepository.Delete(userSession);
             _unitOfWork.SaveChanges();
         }
@@ -148,7 +212,13 @@ namespace Roulette.Security.Services
             ValidateLogin(user, password);
 
             var userSession = CreateNewUserSession(user.Id,new LoginModel() { Username=user.UserName, Password=user.Password});
-
+            var userSessionLog = new UserSessionLog()
+            {
+                UserId =userSession.UserId,
+                LoginTime = DateTime.UtcNow
+            };
+            userSessionLog=_userSessionLogRepository.InsertAndSave(userSessionLog);
+            Authorisation.UserSessionLogId = userSessionLog.Id;
             _userSessionRepository.Insert(userSession);
             _unitOfWork.SaveChanges();
             return userSession.AuthToken;

@@ -11,22 +11,33 @@
     <div class="col-md-4" >
         <div ng-app="Roulette" ng-controller="HomeController" ng-cloak>
             <p ng-show="UpdateUserInput">Please enter your new bet here</p>
-            <form onsubmit="PlaceYourBet()" >
+            <form onsubmit="PlaceYourBet()">
                 <p>Enter your Bet:</p>
                 <p style="color:red" ng-show="NumberLoadFailed"> Failed to load numbers</p>
                 <select ng-model="bet" ng-show="!NumberLoadFailed" ng-change="Clicked = 0">
                     <option value="">Please choose...</option>
                     <option ng-repeat="number in Numbers" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
-
                 </select>
+                <p>Please Select Roulette Event</p>
+                <select ng-model="RouletteEvent" onchange="DisplayMinMaxValue()">
+                    <option value="">Please choose...</option>
+                    <option value="RA 01">RA 01</option>
+                    <option value="RA 11">RA 11</option>
+                    <option value="RA 02">RA 02</option>
+                    <option value="RA 12">RA 12</option>
+                </select>
+                <p>Please Enter your bet Amount({{range}})</p>
+                <input type="text" ng-model="money"/>
                 <p>Your bet is <span ng-bind="bet"></span>.</p>
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
                 <p ng-show="Clicked>1" style="color:red">You have already placed your bet.</p>
             </form>
             <p ng-show="BetPlaced">Your Bet is Placed</p>
             <p ng-show="ActionFailed">Failed to place your bet</p>
-            <input type="button" value="Update Placed Bet" ng-click="UpdateUserInput=true">
-
+            <p ng-show="DeleteUserInput">Bet Deleted</p>
+            <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UpdateUserInput=true" />
+            <input type="button" value="Delete Placed Bet" ng-show="BetPlaced" ng-click="DeleteBet()" />
+            <input type="button" value="LogOff" ng-click="LogOff()" />
         </div>
     </div>
 </div>

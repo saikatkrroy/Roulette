@@ -18,6 +18,7 @@ namespace Roulette.DataAccess
         public DbSet<RouletteEvents> RouletteEvents { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<UserSessions> UserSessions { get; set; }
+        public DbSet<UserSessionLog> UserSessionLogs { get; set; }
         public RouletteDbContext()
             : base("Name=RouletteDbContext")
         {

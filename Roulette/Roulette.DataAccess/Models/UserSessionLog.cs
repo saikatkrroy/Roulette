@@ -12,9 +12,8 @@ namespace Roulette.DataAccess.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public DateTime LoginTime { get; set; }
-        public DateTime LogOutTime { get; set; }
+        public DateTime? LoginTime { get; set; }
+        public DateTime? LogOutTime { get; set; }
         public virtual Users User { get; set; }
-
     }
 }

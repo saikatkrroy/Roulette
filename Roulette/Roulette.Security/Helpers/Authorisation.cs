@@ -9,5 +9,6 @@ namespace Roulette.Security.Helpers
     public static class Authorisation
     {
         public static string AuthToken { get; set; }
+        public static int UserSessionLogId { get; set; }
     }
 }

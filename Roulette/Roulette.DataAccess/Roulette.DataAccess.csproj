@@ -95,6 +95,18 @@
     <Compile Include="Migrations\201912010135395_Populate RouletteEvents.Designer.cs">
       <DependentUpon>201912010135395_Populate RouletteEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912072319268_Add userssionlog.cs" />
+    <Compile Include="Migrations\201912072319268_Add userssionlog.Designer.cs">
+      <DependentUpon>201912072319268_Add userssionlog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912072330381_add Usersessionlogs logs.cs" />
+    <Compile Include="Migrations\201912072330381_add Usersessionlogs logs.Designer.cs">
+      <DependentUpon>201912072330381_add Usersessionlogs logs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912080044221_ alter usersessionlog.cs" />
+    <Compile Include="Migrations\201912080044221_ alter usersessionlog.Designer.cs">
+      <DependentUpon>201912080044221_ alter usersessionlog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -136,6 +148,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912010135395_Populate RouletteEvents.resx">
       <DependentUpon>201912010135395_Populate RouletteEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912072319268_Add userssionlog.resx">
+      <DependentUpon>201912072319268_Add userssionlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912072330381_add Usersessionlogs logs.resx">
+      <DependentUpon>201912072330381_add Usersessionlogs logs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912080044221_ alter usersessionlog.resx">
+      <DependentUpon>201912080044221_ alter usersessionlog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

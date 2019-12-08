@@ -12,7 +12,7 @@ namespace Roulette.Controllers
         public ActionResult Index()
         {
             if (Authorisation.AuthToken == null)
-                throw new Exception("Please Login to Continue");
+                return RedirectToAction("Index","Login");
             return View();
         }
 
