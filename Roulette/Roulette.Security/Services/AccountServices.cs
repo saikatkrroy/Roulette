@@ -121,35 +121,14 @@ namespace Roulette.Security.Services
                 var userSessionLogs = _userSessionLogRepository.Find(l => l.Id == userSessionLogId).ToList();
                 userSessionLogs[0].LogOutTime = DateTime.Now;
                 _unitOfWork.SaveChanges();
-                //Resolve Filename for current usersession
+                
+                //Resolve and create Filename for current usersession
                 var directory = System.AppDomain.CurrentDomain.BaseDirectory;
                 directory=directory.Substring(0, directory.LastIndexOf("Roulette\\"));
                 string filePath = "";
-
-                if (Directory.Exists(directory.ToString() + "UserBetReports"))
-                {
-                    if (Directory.Exists(directory.ToString() + "UserBetReports\\" + userSession.User.UserName))
-                    {
-                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory(directory.ToString() + "UserBetReports\\" + userSession.User.UserName);
-                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
-                    }
-                }
-                else
-                {
-                    if (Directory.Exists(directory.ToString() + "UserBetReports\\" + userSession.User.UserName))
-                    {
-                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory(directory.ToString() + "UserBetReports\\" + userSession.User.UserName);
-                        filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
-                    }
-                }
+                Directory.CreateDirectory(directory.ToString() + "UserBetReports\\" + userSession.User.UserName);
+                filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
+                
                 // Prepare the values
                 var allLines = (from log in logs
                                 select new Object[]
