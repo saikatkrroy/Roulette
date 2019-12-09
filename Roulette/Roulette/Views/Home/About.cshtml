@@ -8,6 +8,15 @@
 <div class="row">
     <div class="col-md-4">
         <div ng-app="Roulette" ng-controller="HomeController" style="background-color:blue" ng-cloak>
+            <form ng-show="authenticated" onsubmit="RetrieveStats()">
+                <p style="color:white">Select UserId</p>
+                <select ng-model="userId">
+                    <option value="">Please choose...</option>
+                    <option value="">All Users</option>
+                    <option ng-repeat="user in Users" ng-bind:value="user">{{ user }}</option>
+                </select>
+                <input type="submit" value="Submit" onclick="RetrieveStats()" />
+            </form>
             <p style="color:white">Odd vs Even Statistics:</p>
             <p style="color:red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
             <div ng-show="!OddEvenStatsFailure">

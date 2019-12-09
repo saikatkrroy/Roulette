@@ -2,7 +2,7 @@
 app.controller("HomeController", function ($scope, $http) {
     $scope.bet = '';
     $scope.money = '';
-    $scope.Numbers = [];
+    $scope.Data = [];
     $scope.HotNumbers = [];
     $scope.CoolNumbers = [];
     $scope.OddEvenStats = [];
@@ -16,18 +16,21 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.Clicked = 0;
     $scope.userSelectedBet = '';
     $scope.range = '';
-    $http.get('/api/RouletteEntry/RetrieveNumbers')
+    $scope.formValidated = true;
+    $http.get('/api/RouletteEntry/RetrieveData')
         .then(function successCallback(response) {
             if (response.data == null)
                 $scope.NumberLoadFailed = true;
             else
-                $scope.Numbers = JSON.parse(JSON.stringify(response.data));
+                $scope.Data = JSON.parse(JSON.stringify(response.data));
         },
             function failureCallback(response) {
                 var data = response.Data;
             });
     PlaceYourBet = function () {
-        if ($scope.Clicked == 0 && $scope.UpdateUserInput == false) {
+        $scope.formValidated=ValidateUserInput();
+
+        if ($scope.Clicked == 0 && $scope.UpdateUserInput == false && formValidated==true) {
             $scope.userSelectedBet = $scope.bet;
             var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent, "betPlaced": $scope.money };
             $http.post('/api/RouletteEntry/CreateUserInput/', betModel).then(
@@ -44,6 +47,19 @@ app.controller("HomeController", function ($scope, $http) {
         if ($scope.Clicked >= 0 && $scope.UpdateUserInput == true) {
             UpdateBet();
         }
+    };
+    ValidateUserInput = function () {
+        if ($scope.bet == "" || $scope.RouletteEvent == "" || $scope.money == '')
+            return false;
+        if ($scope.RouletteEvent == "RA 01" || $scope.RouletteEvent == "RA 02") {
+            if ($scope.bet < 2 || $scope.bet > 20)
+                return false;
+        }
+        if ($scope.RouletteEvent == "RA 11" |$scope.RouletteEvent == "RA 12") {
+            if ($scope.bet < 5 || $scope.bet > 50)
+                return false;
+        }
+        return true;
     };
     UpdateBet = function () {
         $http.put('/api/RouletteEntry/UpdateUserInput/' + $scope.bet + '/' + $scope.userSelectedBet).then(
