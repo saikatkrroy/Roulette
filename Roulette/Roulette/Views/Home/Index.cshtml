@@ -18,12 +18,12 @@
                     <option value="">Please choose...</option>
                     <option ng-repeat="number in Data.Item1" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
                 </select>
-                <p>Please Select Roulette Event</p>
-                <select ng-model="RouletteEvent" onchange="DisplayMinMaxValue()">
+                <p>Please Select Roulette Event:</p>
+                <select ng-model="RouletteEvent">
                     <option value="">Please choose...</option>
                     <option ng-repeat="rouletteEvent in Data.Item2" ng-bind:value="rouletteEvent">{{ rouletteEvent.EventName }}</option>
                 </select>
-                <br />
+                <p>Please enter bet Amount {{range}}</p>
                 <input type="text" ng-model="money"/>
                 <p>Your bet is <span ng-bind="bet"></span>.</p>
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
@@ -32,7 +32,7 @@
             <p ng-show="BetPlaced">Your Bet is Placed</p>
             <p ng-show="ActionFailed">Failed to place your bet</p>
             <p ng-show="DeleteUserInput">Bet Deleted</p>
-            <p ng-show="formValidated">Please fill up all the fields</p>
+            <p ng-show="!formValidated">Please check all the fields</p>
             <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UpdateUserInput=true" />
             <input type="button" value="Delete Placed Bet" ng-show="BetPlaced" ng-click="DeleteBet()" />
             <input type="button" value="LogOff" ng-click="LogOff()" />

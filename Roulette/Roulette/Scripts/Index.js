@@ -52,12 +52,16 @@ app.controller("HomeController", function ($scope, $http) {
         if ($scope.bet == "" || $scope.RouletteEvent == "" || $scope.money == '')
             return false;
         if ($scope.RouletteEvent == "RA 01" || $scope.RouletteEvent == "RA 02") {
-            if ($scope.bet < 2 || $scope.bet > 20)
+            if ($scope.money < 2 || $scope.money > 20) {
+                DisplayMinMaxValue();
                 return false;
+            }
         }
         if ($scope.RouletteEvent == "RA 11" |$scope.RouletteEvent == "RA 12") {
-            if ($scope.bet < 5 || $scope.bet > 50)
+            if ($scope.money < 5 || $scope.money > 50) {
+                DisplayMinMaxValue();
                 return false;
+            }
         }
         return true;
     };
