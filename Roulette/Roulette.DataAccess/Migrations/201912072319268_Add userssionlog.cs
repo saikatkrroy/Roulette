@@ -21,7 +21,7 @@ namespace Roulette.DataAccess.Migrations
                         UpdatedByUserId = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("Roulette.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("Roulette.Users", t => t.UserId)
                 .Index(t => t.UserId);
             
         }
