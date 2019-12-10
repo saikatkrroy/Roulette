@@ -7,7 +7,7 @@ namespace Roulette.DataAccess.Migrations
     {
         public override void Up()
         {
-            AddColumn("Roulette.Logs", "UserSessionLogId", c => c.Int(nullable: false));
+            AddColumn("Roulette.Logs", "UserSessionLogId", c => c.Int());
             CreateIndex("Roulette.Logs", "UserSessionLogId");
             AddForeignKey("Roulette.Logs", "UserSessionLogId", "Roulette.UserSessionLog", "Id");
         }
