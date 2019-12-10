@@ -43,7 +43,7 @@ namespace Roulette.DataAccess.Migrations
                 .ForeignKey("Roulette.Users", t => t.UserId)
                 .Index(t => t.UserId);
             
-            AddColumn("Roulette.Logs", "UserId", c => c.Int(nullable: false));
+            AddColumn("Roulette.Logs", "UserId", c => c.Int());
             CreateIndex("Roulette.Logs", "UserId");
             AddForeignKey("Roulette.Logs", "UserId", "Roulette.Users", "Id");
         }
