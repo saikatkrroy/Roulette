@@ -20,19 +20,15 @@ namespace Roulette.Controllers
         IRepository<RouletteEvents> _rouletteEventsRepository { get; set; }
         IUnitOfWork _unitofWork { get; set; }
 
-        public RouletteEntryController(IRepository<Logs> logRepository,
-            IRepository<Numbers> numberRepository,
-            IRepository<UserSessions> userSessionRepository,
-            IRepository<RouletteEvents> rouletteEventsRepository,
-            IRepository<Users> userRepository,
-            IUnitOfWork unitOfWork)
+        public RouletteEntryController()
         {
-            _logRepository = logRepository;
-            _numberRepository = numberRepository;
-            _userSessionRepository = userSessionRepository;
-            _userRepository = userRepository;
-            _rouletteEventsRepository = rouletteEventsRepository;
-            _unitofWork = unitOfWork;
+            RouletteDbContext rouletteDbContext = new RouletteDbContext();
+            _logRepository = new Repository<Logs>(rouletteDbContext);
+            _numberRepository = new Repository<Numbers>(rouletteDbContext);
+            _userSessionRepository = new Repository<UserSessions>(rouletteDbContext);
+            _userRepository = new Repository<Users>(rouletteDbContext);
+            _rouletteEventsRepository = new Repository<RouletteEvents>(rouletteDbContext);
+            _unitofWork = new UnitOfWork(rouletteDbContext);
         }
         
         [HttpGet]

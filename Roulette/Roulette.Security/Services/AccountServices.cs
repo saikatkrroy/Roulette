@@ -1,5 +1,7 @@
-﻿using Roulette.DataAccess.Interfaces;
+﻿using Roulette.DataAccess;
+using Roulette.DataAccess.Interfaces;
 using Roulette.DataAccess.Models;
+using Roulette.DataAccess.Services;
 using Roulette.Security.Helpers;
 using Roulette.Security.Interfaces;
 using Roulette.Security.Models;
@@ -22,13 +24,14 @@ namespace Roulette.Security.Services
         IUnitOfWork _unitOfWork { get; set; }
         private const string PASSWORD_VALIDATION_REGEX = @"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).{8,64}$";
 
-        public AccountServices(IRepository<Users> usersRepository, IRepository<UserSessions> userSessionRepository, IUnitOfWork unitOfWork, IRepository<UserSessionLog> userSessionLogRepository, IRepository<Logs> logRepository)
+        public AccountServices()
         {
-            _usersRepository = usersRepository;
-            _userSessionRepository = userSessionRepository;
-            _userSessionLogRepository = userSessionLogRepository;
-            _logRepository = logRepository;
-            _unitOfWork = unitOfWork;
+            RouletteDbContext rouletteDbContext = new RouletteDbContext();
+            _usersRepository = new Repository<Users>(rouletteDbContext);
+            _userSessionRepository = new Repository<UserSessions>(rouletteDbContext);
+            _userSessionLogRepository = new Repository<UserSessionLog>(rouletteDbContext);
+            _logRepository = new Repository<Logs>(rouletteDbContext);
+            _unitOfWork = new UnitOfWork(rouletteDbContext);
         }
         public Users CreateNewUser(LoginModel person, bool isEmailUsername = true)
         {
