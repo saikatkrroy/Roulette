@@ -22,7 +22,7 @@ namespace Roulette.DataAccess.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            AddColumn("Roulette.Logs", "RouletteEventId", c => c.Int(nullable: false));
+            AddColumn("Roulette.Logs", "RouletteEventId", c => c.Int());
             AddColumn("Roulette.Logs", "BetPlaced", c => c.Double(nullable: false));
             CreateIndex("Roulette.Logs", "RouletteEventId");
             AddForeignKey("Roulette.Logs", "RouletteEventId", "Roulette.RouletteEvents", "Id");
