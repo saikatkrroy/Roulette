@@ -30,7 +30,7 @@ app.controller("HomeController", function ($scope, $http) {
     PlaceYourBet = function () {
         $scope.formValidated=ValidateUserInput();
 
-        if ($scope.Clicked == 0 && $scope.UpdateUserInput == false && formValidated==true) {
+        if ($scope.Clicked == 0 && $scope.UpdateUserInput == false && $scope.formValidated==true) {
             $scope.userSelectedBet = $scope.bet;
             var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent, "betPlaced": $scope.money };
             $http.post('/api/RouletteEntry/CreateUserInput/', betModel).then(
