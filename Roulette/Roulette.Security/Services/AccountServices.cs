@@ -118,7 +118,7 @@ namespace Roulette.Security.Services
             //Update UserSessionLogs for the current UserSession
             var userSession = _userSessionRepository.Find(us => us.AuthToken == authToken).Single();
             var logs = _logRepository.Find(l=>l.UserSessionLogs.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null).ToList();
-            if (logs.Count >= 0)
+            if (logs.Count > 0)
             {
                 var userSessionLogId = logs.FirstOrDefault().UserSessionLogs.Id;
                 var userSessionLogs = _userSessionLogRepository.Find(l => l.Id == userSessionLogId).ToList();
