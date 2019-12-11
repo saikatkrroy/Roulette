@@ -14,7 +14,7 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.ZeroFailure = false;
     $scope.authToken = '';
     $scope.authenticated = false;
-
+    $scope.Zero = '';
     $http.get('/api/RouletteEntry/RetrieveUsers')
         .then(function successCallback(response) {
             if (response.data.length > 0) {
@@ -66,10 +66,7 @@ app.controller("HomeController", function ($scope, $http) {
             });
     $http.get('/api/RouletteEntry/RetrieveZeroPercentage', $scope.userId)
         .then(function successCallback(response) {
-            if (response.data.Zero == 0)
-                $scope.ZeroFailure = true;
-            else
-                $scope.Zero = JSON.parse(JSON.stringify(response.data));
+             $scope.Zero = JSON.parse(JSON.stringify(response.data));
         },
             function failureCallback(response) {
                 $scope.ZeroFailure = true;
@@ -118,10 +115,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $http.get('/api/RouletteEntry/RetrieveZeroPercentage', $scope.userId)
             .then(function successCallback(response) {
-                if (response.data.Zero == 0)
-                    $scope.ZeroFailure = true;
-                else
-                    $scope.Zero = JSON.parse(JSON.stringify(response.data));
+                S$scope.Zero = JSON.parse(JSON.stringify(response.data));
             },
                 function failureCallback(response) {
                     $scope.ZeroFailure = true;
