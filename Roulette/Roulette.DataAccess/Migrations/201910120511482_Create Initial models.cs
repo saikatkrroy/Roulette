@@ -34,7 +34,7 @@ namespace Roulette.DataAccess.Migrations
                         UpdatedByUserId = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("Roulette.Colors", t => t.ColorId, cascadeDelete: true)
+                .ForeignKey("Roulette.Colors", t => t.ColorId)
                 .Index(t => t.ColorId);
             
             CreateTable(
@@ -49,7 +49,7 @@ namespace Roulette.DataAccess.Migrations
                         UpdatedByUserId = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("Roulette.Numbers", t => t.NumberId, cascadeDelete: true)
+                .ForeignKey("Roulette.Numbers", t => t.NumberId)
                 .Index(t => t.NumberId);
             
         }
