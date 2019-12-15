@@ -117,7 +117,12 @@ namespace Roulette.Security.Services
 
             //Update UserSessionLogs for the current UserSession
             var userSession = _userSessionRepository.Find(us => us.AuthToken == authToken).Single();
-            var logs = _logRepository.Find(l=>l.UserSessionLogs.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null).ToList();
+            var updateBetLogs = _logRepository.Find(l => l.UserSessionLogs.UserId == userSession.UserId && l.UpdateFlag == true).ToList();
+            updateBetLogs.ForEach(ubl=>ubl.UpdateFlag=false);
+            updateBetLogs.ForEach(ubl=>_logRepository.Update(ubl));
+            _unitOfWork.SaveChanges();
+            var logs = _logRepository.Find(l=>l.UserSessionLogs.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null ).ToList();
+            logs = logs.Where(l => l.UserSessionLogs.LoginTime > DateTime.Today.AddDays(-1)).ToList();
             if (logs.Count > 0)
             {
                 var userSessionLogId = logs.FirstOrDefault().UserSessionLogs.Id;

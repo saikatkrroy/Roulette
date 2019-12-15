@@ -24,18 +24,45 @@
                     <option ng-repeat="rouletteEvent in Data.Item2" ng-bind:value="rouletteEvent">{{ rouletteEvent.EventName }}</option>
                 </select>
                 <p>Please enter bet Amount {{range}}</p>
-                <input type="text" ng-model="money"/>
+                <input type="text" ng-model="money" />
                 <p>Your bet is <span ng-bind="bet"></span>.</p>
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
-                <p ng-show="Clicked>1" style="color:red">You have already placed your bet.</p>
             </form>
             <p ng-show="BetPlaced">Your Bet is Placed</p>
             <p ng-show="ActionFailed">Failed to place your bet</p>
             <p ng-show="DeleteUserInput">Bet Deleted</p>
             <p ng-show="!formValidated">Please check all the fields</p>
-            <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UpdateUserInput=true" />
+            <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UserInputUpdate()" />
             <input type="button" value="Delete Placed Bet" ng-show="BetPlaced" ng-click="DeleteBet()" />
             <input type="button" value="LogOff" ng-click="LogOff()" />
+            <input type="submit" value="Find my Statistics" onclick="RetrieveStats()" />
+            <div ng-show="StatsVisible" style="background-color:blue">
+                <p style="color:white">Odd vs Even Statistics:</p>
+                <p style="color:red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
+                <div ng-show="!OddEvenStatsFailure">
+                    <p style="color:white">Odd:{{OddEvenStats.Odd}}%</p>
+                    <p style="color:white">Even:{{OddEvenStats.Even}}%</p>
+                </div>
+                <p style="color:white">Color Statistics</p>
+                <p style="color:red" ng-show="ColorStatsFailure">Unable to Retrieve Color statistics. Please contact system administrator.</p>
+                <div ng-show="!ColorStatsFailure">
+                    <p style="color:white">Black:{{ColorStats.Black}}%</p>
+                    <p style="color:white">Red:{{ColorStats.Red}}%</p>
+                </div>
+                <p style="color:white">Zero Percentage</p>
+                <p style="color:red" ng-show="ZeroFailure">Unable to Retrieve Zero Percentage. Please contact system administrator.</p>
+                <div style="background-color:white" ng-show="!ZeroFailure">
+                    <p style="color:green">0:{{Zero.Zero}}%</p>
+                </div>
+                <p style="color:white">Hot Numbers</p>
+                <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Hot Numbers. Please contact system administrator.</p>
+                <div style="background-color:white" ng-show="!HotNumberFailure"><p ng-repeat="HotNumber in HotNumbers" ng-style="{'color':HotNumber.Color.Name}">{{HotNumber.Number}}</p></div>
+                <p style="color:white">Cool Numbers</p>
+                <p style="color:red" ng-show="CoolNumberFailure">Unable to Retrieve Cool Numbers. Please contact system administrator.</p>
+                <div style="background-color:white" ng-show="!CoolNumberFailure">
+                    <p ng-repeat="CoolNumber in CoolNumbers" ng-style="{'color':CoolNumber.Color.Name}">{{CoolNumber.Number}}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -30,17 +30,47 @@ namespace Roulette.Controllers
             _rouletteEventsRepository = new Repository<RouletteEvents>(rouletteDbContext);
             _unitofWork = new UnitOfWork(rouletteDbContext);
         }
-        
         [HttpGet]
-        [Route("api/RouletteEntry/RetrieveHotNumber")]
-        public List<Numbers> RetrieveHotNumber([FromBody]string userId)
+        [Route("api/RouletteEntry/UserInputUpdate")]
+        public void UserInputUpdate()
         {
+            var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
+            Logs log = new Logs();
+            var logList = _logRepository.Find(l => l.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null);
+            log = (from logs in logList
+                        orderby logs.Id descending
+                        select logs).Take(1).Single();
+            log.UpdateFlag = true;
+            _logRepository.Update(log);
+            _unitofWork.SaveChanges();
+        }
+        [HttpGet]
+        [Route("api/RouletteEntry/UserInputUpdateData")]
+        public Logs UserInputUpdateData()
+        {
+            var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
+            Logs log = new Logs();
+            var logList = _logRepository.Find(l => l.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null && l.UpdateFlag==true);
+            if(logList.Count()>0)
+                log = (from logs in logList
+                       orderby logs.Id descending
+                       select logs).Take(1).Single();
+            return log;
+        }
+        [HttpGet]
+        [Route("api/RouletteEntry/RetrieveHotNumber/{sessionFlag}")]
+        public List<Numbers> RetrieveHotNumber([FromUri]bool sessionFlag)
+        {
+            var userSessions = _userSessionRepository.Find(us=>us.AuthToken==Authorisation.AuthToken);
+            var userSession = (userSessions.Count() == 0) ? null : userSessions.Single();
+            if (!sessionFlag)
+                userSession = null;
             List<Numbers> numbers = new List<Numbers>();
             IQueryable<Logs> logs=null;
-            if (String.IsNullOrEmpty(userId))
+            if (String.IsNullOrEmpty(userSession?.User?.Id.ToString()))
                 logs = _logRepository.Find();
             else
-                logs = _logRepository.Find(l => l.UserSessionLogs.User.UserName == userId);
+                logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
             var lastHundredLogs = (from log in logs
                                            orderby log.Id descending
                                            select log).Take(100).ToList();
@@ -52,15 +82,19 @@ namespace Roulette.Controllers
             return numbers ;
         }
         [HttpGet]
-        [Route("api/RouletteEntry/RetrieveCoolNumber")]
-        public List<Numbers> RetrieveCoolNumber([FromBody]string userId)
+        [Route("api/RouletteEntry/RetrieveCoolNumber/{sessionFlag}")]
+        public List<Numbers> RetrieveCoolNumber([FromUri]bool sessionFlag)
         {
+            var userSessions = _userSessionRepository.Find(us=>us.AuthToken==Authorisation.AuthToken);
+            var userSession = (userSessions.Count() == 0) ? null : userSessions.Single();
+            if (!sessionFlag)
+                userSession = null;
             List<Numbers> numbers = new List<Numbers>();
             IQueryable<Logs> logs = null;
-            if (String.IsNullOrEmpty(userId))
+            if (String.IsNullOrEmpty(userSession?.User?.Id.ToString()))
                 logs = _logRepository.Find();
             else
-                logs = _logRepository.Find(l => l.UserSessionLogs.User.UserName == userId);
+                logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
@@ -73,14 +107,18 @@ namespace Roulette.Controllers
 
         }
         [HttpGet]
-        [Route("api/RouletteEntry/RetrieveColorStats")]
-        public IDictionary<string,float> RetrieveColorStats([FromBody]string userId)
+        [Route("api/RouletteEntry/RetrieveColorStats/{sessionFlag}")]
+        public IDictionary<string,float> RetrieveColorStats([FromUri]bool sessionFlag)
         {
+            var userSessions = _userSessionRepository.Find(us=>us.AuthToken==Authorisation.AuthToken);
+            var userSession = (userSessions.Count() == 0) ? null : userSessions.Single();
+            if (!sessionFlag)
+                userSession = null;
             IQueryable<Logs> logs = null;
-            if (String.IsNullOrEmpty(userId))
+            if (String.IsNullOrEmpty(userSession?.User?.Id.ToString()))
                 logs = _logRepository.Find();
             else
-                logs = _logRepository.Find(l => l.UserSessionLogs.User.UserName == userId);
+                logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
             var loglist = logs.ToList();
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
@@ -100,14 +138,18 @@ namespace Roulette.Controllers
 
         }
         [HttpGet]
-        [Route("api/RouletteEntry/RetrieveOddEvenStats")]
-        public IDictionary<string,int> RetrieveOddEvenStats([FromBody]string userId)
+        [Route("api/RouletteEntry/RetrieveOddEvenStats/{sessionFlag}")]
+        public IDictionary<string,int> RetrieveOddEvenStats([FromUri]bool sessionFlag)
         {
+            var userSessions = _userSessionRepository.Find(us=>us.AuthToken==Authorisation.AuthToken);
+            var userSession = (userSessions.Count() == 0) ? null : userSessions.Single();
+            if (!sessionFlag)
+                userSession = null;
             IQueryable<Logs> logs = null;
-            if (String.IsNullOrEmpty(userId))
+            if (String.IsNullOrEmpty(userSession?.User?.Id.ToString()))
                 logs = _logRepository.Find();
             else
-                logs = _logRepository.Find(l => l.UserSessionLogs.User.UserName == userId);
+                logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
@@ -126,14 +168,18 @@ namespace Roulette.Controllers
             return oddEvenStats;
         }
         [HttpGet]
-        [Route("api/RouletteEntry/RetrieveZeroPercentage")]
-        public IDictionary<string, int> RetrieveZeroPercentage([FromBody]string userId)
+        [Route("api/RouletteEntry/RetrieveZeroPercentage/{sessionFlag}")]
+        public IDictionary<string, int> RetrieveZeroPercentage([FromUri]bool sessionFlag)
         {
+            var userSessions = _userSessionRepository.Find(us=>us.AuthToken==Authorisation.AuthToken);
+            var userSession = (userSessions.Count()==0)?null: userSessions.Single();
+            if (!sessionFlag)
+                userSession = null;
             IQueryable<Logs> logs = null;
-            if (String.IsNullOrEmpty(userId))
+            if (String.IsNullOrEmpty(userSession?.User?.Id.ToString()))
                 logs = _logRepository.Find();
             else
-                logs = _logRepository.Find(l => l.UserSessionLogs.User.UserName == userId);
+                logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
             IDictionary<string, int> zeroPercentage = new Dictionary<string, int>();
 
             var lastHundredLogs = (from log in logs
@@ -148,7 +194,7 @@ namespace Roulette.Controllers
         }
         [HttpGet]
         [Route("api/RouletteEntry/RetrieveData")]
-        public object RetrieveNumbers()
+        public object RetrieveData()
         {
             var numbers = _numberRepository.Find().ToList();
             var rouletteEvents = _rouletteEventsRepository.Find().ToList();
@@ -167,11 +213,12 @@ namespace Roulette.Controllers
             var rouletteEvent = _rouletteEventsRepository.Find(r =>r.EventName== betModel.rouletteEventName).Single();
             var log = new Logs()
             {
-                NumberId=number.Id,
-                UserId=userSession.User.Id,
-                RouletteEventId= rouletteEvent.Id,
-                BetPlaced= betModel.betPlaced,
-                UserSessionLogId=Authorisation.UserSessionLogId
+                NumberId = number.Id,
+                UserId = userSession.User.Id,
+                RouletteEventId = rouletteEvent.Id,
+                BetPlaced = betModel.betPlaced,
+                UserSessionLogId = Authorisation.UserSessionLogId,
+                UpdateFlag = false,
             };
             _logRepository.Insert(log);
             _unitofWork.SaveChanges();
@@ -189,6 +236,7 @@ namespace Roulette.Controllers
                        select logs).Take(1).Single();
             var number = _numberRepository.FindSingleOrNull(n => n.Number == value.ToString());
             log.NumberId = number.Id;
+            log.UpdateFlag = false;
             _logRepository.Update(log);
             _unitofWork.SaveChanges();
         }
@@ -207,15 +255,15 @@ namespace Roulette.Controllers
             _logRepository.Delete(log);
             _unitofWork.SaveChanges();
         }
-        [HttpGet]
-        [Route("api/RouletteEntry/RetrieveUsers")]
-        public List<string> RetrieveUsers()
-        {
-            List<string> logs = new List<string>();
-            if (!String.IsNullOrEmpty(Authorisation.AuthToken))
-                logs = _userRepository.Find().Select(u=>u.UserName).ToList();
+        //[HttpGet]
+        //[Route("api/RouletteEntry/RetrieveUsers")]
+        //public List<string> RetrieveUsers()
+        //{
+        //    List<string> logs = new List<string>();
+        //    if (!String.IsNullOrEmpty(Authorisation.AuthToken))
+        //        logs = _userRepository.Find().Select(u=>u.UserName).ToList();
 
-            return logs;
-        }
+        //    return logs;
+        //}
     }
 }

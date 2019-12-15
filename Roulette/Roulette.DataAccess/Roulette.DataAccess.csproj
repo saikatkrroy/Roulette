@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201912080044221_ alter usersessionlog.Designer.cs">
       <DependentUpon>201912080044221_ alter usersessionlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912150128059_add updateflag.cs" />
+    <Compile Include="Migrations\201912150128059_add updateflag.Designer.cs">
+      <DependentUpon>201912150128059_add updateflag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -157,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912080044221_ alter usersessionlog.resx">
       <DependentUpon>201912080044221_ alter usersessionlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150128059_add updateflag.resx">
+      <DependentUpon>201912150128059_add updateflag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
