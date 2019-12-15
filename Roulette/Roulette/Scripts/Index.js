@@ -31,8 +31,9 @@ app.controller("HomeController", function ($scope, $http) {
         .then(function successCallback(response) {
             if (response.data == null)
                 $scope.NumberLoadFailed = true;
-            else
+            else {
                 $scope.Data = JSON.parse(JSON.stringify(response.data));
+            }
         },
             function failureCallback(response) {
                 var data = response.Data;

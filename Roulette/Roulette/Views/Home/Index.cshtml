@@ -19,11 +19,15 @@
                     <option ng-repeat="number in Data.Item1" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
                 </select>
                 <p>Please Select Roulette Event:</p>
-                <select ng-model="RouletteEvent">
+                <select ng-model="RouletteEvent" onchange="DisplayMinMaxValue()">
                     <option value="">Please choose...</option>
                     <option ng-repeat="rouletteEvent in Data.Item2" ng-bind:value="rouletteEvent">{{ rouletteEvent.EventName }}</option>
                 </select>
-                <p>Please enter bet Amount {{range}}</p>
+                <p>
+                    Please enter bet Amount <br>(RouletteEvent:RA01 Min:2 Euro Max:20 Euro<br>RouletteEvent:RA11 Min:5 Euro Max:50 Euro
+                    <br>RouletteEvent:RA02 Min:2 Euro Max:20 Euro
+                    <br>RouletteEvent:RA12 Min:5 Euro Max:50 Euro)
+                </p>
                 <input type="text" ng-model="money" />
                 <p>Your bet is <span ng-bind="bet"></span>.</p>
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
