@@ -55,7 +55,7 @@ app.controller("HomeController", function ($scope, $http) {
 
         if ($scope.updateUserInput == false && $scope.formValidated==true) {
             $scope.userSelectedBet = $scope.bet;
-            var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent, "betPlaced": $scope.money };
+            var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent };
             $http.post('/api/RouletteEntry/CreateUserInput/', betModel).then(
                 function successCallback(response) {
                     if (response.status == 204)
@@ -85,20 +85,20 @@ app.controller("HomeController", function ($scope, $http) {
             });
     };
     ValidateUserInput = function () {
-        if ($scope.bet == "" || $scope.RouletteEvent == "" || $scope.money == '')
+        if ($scope.bet == "" || $scope.RouletteEvent == "" )
             return false;
-        if ($scope.RouletteEvent == "RA 01" || $scope.RouletteEvent == "RA 02") {
-            if ($scope.money < 2 || $scope.money > 20) {
-                DisplayMinMaxValue();
-                return false;
-            }
-        }
-        if ($scope.RouletteEvent == "RA 11" |$scope.RouletteEvent == "RA 12") {
-            if ($scope.money < 5 || $scope.money > 50) {
-                DisplayMinMaxValue();
-                return false;
-            }
-        }
+        //if ($scope.RouletteEvent == "RA 01" || $scope.RouletteEvent == "RA 02") {
+        //    if ($scope.money < 2 || $scope.money > 20) {
+        //        DisplayMinMaxValue();
+        //        return false;
+        //    }
+        //}
+        //if ($scope.RouletteEvent == "RA 11" |$scope.RouletteEvent == "RA 12") {
+        //    if ($scope.money < 5 || $scope.money > 50) {
+        //        DisplayMinMaxValue();
+        //        return false;
+        //    }
+        //}
         return true;
     };
     UpdateBet = function () {

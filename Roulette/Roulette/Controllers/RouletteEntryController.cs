@@ -216,7 +216,7 @@ namespace Roulette.Controllers
                 NumberId = number.Id,
                 UserId = userSession.User.Id,
                 RouletteEventId = rouletteEvent.Id,
-                BetPlaced = betModel.betPlaced,
+                //SBetPlaced = betModel.betPlaced,
                 UserSessionLogId = Authorisation.UserSessionLogId,
                 UpdateFlag = false,
             };
