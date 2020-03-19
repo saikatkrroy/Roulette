@@ -74,7 +74,7 @@ namespace Roulette.Controllers
             var lastHundredLogs = (from log in logs
                                            orderby log.Id descending
                                            select log).Take(100).ToList();
-            var hotNumbers = lastHundredLogs.GroupBy(c => c.NumberId).OrderByDescending(c => c.Count()).Take(4).ToList();
+            var hotNumbers = lastHundredLogs.GroupBy(c => c.NumberId).OrderByDescending(c => c.Count()).Take(6).ToList();
             foreach(var hotNumber in hotNumbers)
             {
                 numbers.Add(hotNumber.First().Number);
@@ -98,13 +98,36 @@ namespace Roulette.Controllers
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
-            var coolNumbers = lastHundredLogs.GroupBy(c => c.NumberId).OrderBy(c => c.Count()).Take(4).ToList();
+            var coolNumbers = lastHundredLogs.GroupBy(c => c.NumberId).OrderBy(c => c.Count()).Take(6).ToList();
             foreach (var coolNumber in coolNumbers)
             {
                 numbers.Add(coolNumber.First().Number);
             }
             return numbers;
 
+        }
+        [HttpGet]
+        [Route("api/RouletteEntry/LastTwelveBet/{sessionFlag}")]
+        public List<Numbers> RetrieveLastTwelveBets([FromUri]bool sessionFlag)
+        {
+            var userSessions = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken);
+            var userSession = (userSessions.Count() == 0) ? null : userSessions.Single();
+            if (!sessionFlag)
+                userSession = null;
+            List<Numbers> numbers = new List<Numbers>();
+            IQueryable<Logs> logs = null;
+            if (String.IsNullOrEmpty(userSession?.User?.Id.ToString()))
+                logs = _logRepository.Find();
+            else
+                logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
+            var lastTwelveLogs = (from log in logs
+                                   orderby log.Id descending
+                                   select log).Take(12).ToList();
+            foreach (var lastTwelveLog in lastTwelveLogs)
+            {
+                numbers.Add(lastTwelveLog.Number);
+            }
+            return numbers;
         }
         [HttpGet]
         [Route("api/RouletteEntry/RetrieveColorStats/{sessionFlag}")]
@@ -181,7 +204,7 @@ namespace Roulette.Controllers
             else
                 logs = _logRepository.Find(l => l.UserSessionLogs.User.Id == userSession.User.Id);
             IDictionary<string, int> zeroPercentage = new Dictionary<string, int>();
-
+            zeroPercentage["Zero"] = 0;
             var lastHundredLogs = (from log in logs
                                    orderby log.Id descending
                                    select log).Take(100).ToList();
@@ -190,6 +213,7 @@ namespace Roulette.Controllers
                 var zeroCount = lastHundredLogs.Count(lhl => lhl.Number.Number=="0");
                 zeroPercentage["Zero"] = ((zeroCount*100)/lastHundredLogs.Count);
             }
+
             return zeroPercentage;
         }
         [HttpGet]

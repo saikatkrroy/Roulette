@@ -5,10 +5,12 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.CoolNumbers = [];
     $scope.OddEvenStats = [];
     $scope.ColorStats = [];
+    $scope.LastTwelveBets = [];
     $scope.OddEvenStatsFailure = false;
     $scope.ColorStatsFailure = false;
     $scope.HotNumberFailure = false;
     $scope.CoolNumberFailure = false;
+    $scope.LastTwelveBetFailure = false;
     $scope.ZeroFailure = false;
     $scope.authToken = '';
     $scope.authenticated = false;
@@ -62,5 +64,14 @@ app.controller("HomeController", function ($scope, $http) {
                 $scope.ZeroFailure = true;
 
             });
-    
+    $http.get('/api/RouletteEntry/LastTwelveBet/false')
+        .then(function successCallback(response) {
+            if (response.data.length == 0)
+                $scope.LastTwelveBetFailure = true;
+            else
+                $scope.LastTwelveBets = JSON.parse(JSON.stringify(response.data));
+        },
+            function failureCallback(response) {
+                $scope.LastTwelveBetFailure = true;
+            });
 });

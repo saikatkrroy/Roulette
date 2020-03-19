@@ -22,9 +22,7 @@
                         <div class="controls" ng-show="createNewUser">
                             <input type="button" value="Login" ng-click="createNewUser=false" />
                         </div>
-                        <div class="controls" ng-show="!createNewUser">
-                            <input type="button" value="Create New User" ng-click="createNewUser=true" />
-                        </div>
+                        
                         <form onsubmit="Login()" ng-show="!createNewUser">
                             <div class="control-group">
                                 <label for="txtUserId" class="control-label">User ID</label>
@@ -45,30 +43,7 @@
                             </div>
                         </form>
                         <p ng-show="LoginFailed" class="text-danger">Invalid Username or Password</p>
-                        <div class="control-group">
-
-                            <form onsubmit="CreateNewUser()" ng-show="createNewUser">
-                                <div class="control-group">
-                                    <label for="txtUserIdnew" class="control-label">User ID</label>
-                                    <div class="controls">
-                                        <input name="txtUserIdnew" type="text" ng-model="userIdNew" maxlength="255" id="txtuserIdnew">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label for="txtPasswordnew" class="control-label">Password(Please Choose a strong password, a combination of upper case, Lower case,numbers, and special characters)</label>
-                                    <div class="controls">
-                                        <input name="txtPasswordnew" type="password" ng-model="passwordNew" maxlength="255" id="txtPasswordnew">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <input type="submit" value="Create" ng-click="CreateNewUser()" />
-                                    </div>
-                                </div>
-                            </form>
-                            <p ng-show="userCreated">User Created</p>
-                            <p ng-show="userCreationFailed" class="text-danger">Please check your Username and Password</p>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

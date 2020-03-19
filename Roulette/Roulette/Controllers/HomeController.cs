@@ -11,8 +11,8 @@ namespace Roulette.Controllers
     {
         public ActionResult Index()
         {
-            if (Authorisation.AuthToken == null)
-                return RedirectToAction("Index","Login");
+            //if (Authorisation.AuthToken == null)
+            //    return RedirectToAction("Index","Login");
             return View();
         }
 

@@ -6,6 +6,7 @@ using Roulette.Security.Helpers;
 using Roulette.Security.Interfaces;
 using Roulette.Security.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -136,7 +137,7 @@ namespace Roulette.Security.Services
                 string filePath = "";
                 Directory.CreateDirectory(directory.ToString() + "UserBetReports\\" + userSession.User.UserName);
                 filePath = directory.ToString() + "UserBetReports\\" + userSession.User.UserName + "\\" + userSessionLogs[0].Id + ".csv";
-                
+
                 // Prepare the values
                 var allLines = (from log in logs
                                 select new Object[]
@@ -146,11 +147,13 @@ namespace Roulette.Security.Services
                                     log.UserSessionLogs.LogOutTime.ToString(),
                                     log.BetPlaced.ToString(),
                                     log.Number.Number.ToString(),
-                                    log.RouletteEvent.EventName.ToString()
+                                    log.RouletteEvent.EventName.ToString(),
+                                    log.CreateDate.ToString()
                                 }).ToList();
 
                 // Build the file content
                 var csv = new StringBuilder();
+                csv.AppendLine(string.Join(",", "UserName,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time"));
                 allLines.ForEach(line =>
                 {
                     csv.AppendLine(string.Join(",", line));
@@ -216,7 +219,16 @@ namespace Roulette.Security.Services
             {
                 throw new Exception("INVALID USER NAME OR PASSWORD");
             }
+        }
 
+        public IList<String> RetrieveUsers()
+        {
+            return _usersRepository.Find().Select(x => x.UserName).ToList();
+        }
+        public void DeleteUser(string userId)
+        {
+            var user=_usersRepository.Find(u=>u.UserName==userId).Single();
+            _usersRepository.Delete(user.Id);
         }
     }
 }

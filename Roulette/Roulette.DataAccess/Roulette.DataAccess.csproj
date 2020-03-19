@@ -115,6 +115,14 @@
     <Compile Include="Migrations\201912171052096_Sync.Designer.cs">
       <DependentUpon>201912171052096_Sync.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003060034193_Update Roulette EventName.cs" />
+    <Compile Include="Migrations\202003060034193_Update Roulette EventName.Designer.cs">
+      <DependentUpon>202003060034193_Update Roulette EventName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003060141003_Update Zero odd even factor.cs" />
+    <Compile Include="Migrations\202003060141003_Update Zero odd even factor.Designer.cs">
+      <DependentUpon>202003060141003_Update Zero odd even factor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -171,6 +179,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912171052096_Sync.resx">
       <DependentUpon>201912171052096_Sync.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003060034193_Update Roulette EventName.resx">
+      <DependentUpon>202003060034193_Update Roulette EventName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003060141003_Update Zero odd even factor.resx">
+      <DependentUpon>202003060141003_Update Zero odd even factor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

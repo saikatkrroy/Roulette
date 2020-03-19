@@ -8,6 +8,10 @@
 <div class="row">
     <div class="col-md-4">
         <div ng-app="Roulette" ng-controller="HomeController" style="background-color:blue" ng-cloak>
+            <p style="color:white">Last Twelve Bets</p>
+            <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Last Twelve Bets. Please contact system administrator.</p>
+            <div style="background-color:white" ng-show="!LastTwelveBetFailure"><p ng-repeat="LastTwelveBet in LastTwelveBets" ng-style="{'color':LastTwelveBet.Color.Name}">{{LastTwelveBet.Number}}</p></div>
+            
             <p style="color:white">Odd vs Even Statistics:</p>
             <p style="color:red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
             <div ng-show="!OddEvenStatsFailure">

@@ -25,17 +25,7 @@ app.controller("HomeController", function ($scope, $http) {
                 $scope.LoginFailed = true;
             });
     };
-    CreateNewUser = function () {
-        var loginModel = { "Username": $scope.userIdNew, "Password": $scope.passwordNew };
-        $http.post('/api/Account/CreateNewUser', loginModel).then(
-            function successCallback(response) {
-                if (response.status == 200)
-                    $scope.userCreated = true;
-            },
-            function failureCallback(response) {
-                $scope.userCreationFailed = true;
-            });
-    };
+    
     LogOff = function () {
         var loginModel = { "Username": $scope.userIdNew, "Password": $scope.passwordNew };
         $http.post('/api/Account/LogOff', authToken).then(

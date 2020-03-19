@@ -1,5 +1,14 @@
 ﻿var app = angular.module("Roulette", []);
 app.controller("HomeController", function ($scope, $http) {
+    $scope.LoginFailed = false;
+    $scope.userIdNew = '';
+    $scope.passwordNew = '';
+    $scope.createNewUser = false;
+    $scope.deleteUser = false;
+    $scope.userCreated = false;
+    $scope.userDeleted = false;
+    $scope.userCreationFailed = false;
+    $scope.failedDelete = false;
     $scope.bet = '';
     $scope.money = '';
     $scope.Data = [];
@@ -28,116 +37,47 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.LastTwelveBetFailure = false;
     $scope.ZeroFailure = false;
     $scope.StatsVisible = false;
+    $scope.DisplayStats = false;
     $scope.Zero = '';
-    $http.get('/api/RouletteEntry/RetrieveData')
-        .then(function successCallback(response) {
-            if (response.data == null)
-                $scope.NumberLoadFailed = true;
-            else {
-                $scope.Data = JSON.parse(JSON.stringify(response.data));
-            }
-        },
-            function failureCallback(response) {
-                var data = response.Data;
-            });
-    //$http.get('/api/RouletteEntry/UserInputUpdateData').then(
-    //    function successCallback(response) {
-    //        if (response.status == 200) {
-    //            $scope.bet = response.data.Number.Number;
-    //            $scope.RouletteEvent = response.data.RouletteEvent.EventName;
-    //            $scope.money = response.data.BetPlaced;
-    //        }
-
-    //    },
-    //    function failureCallback(response) {
-    //        $scope.ActionFailed = true;
-    //    });
-    PlaceYourBet = function () {
-        $scope.formValidated=ValidateUserInput();
-
-        if ($scope.updateUserInput == false && $scope.formValidated==true) {
-            $scope.userSelectedBet = $scope.bet;
-            var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent };
-            $http.post('/api/RouletteEntry/CreateUserInput/', betModel).then(
-                function successCallback(response) {
-                    if (response.status == 204)
-                        $scope.BetPlaced = true;
-
-                },
-                function failureCallback(response) {
-                    $scope.ActionFailed = true;
-                });
-        }
-        if ($scope.Clicked >= 0 && $scope.updateUserInput == true) {
-            UpdateBet();
-        }
-    };
-    $scope.UserInputUpdate = function () {
-        $scope.updateUserInput = true;
-        $http.get('/api/RouletteEntry/UserInputUpdate').then(
+    $scope.userList = [];
+    $scope.selectedUser = '';
+    CreateNewUser = function () {
+        var loginModel = { "Username": $scope.userIdNew, "Password": $scope.passwordNew };
+        $http.post('/api/Account/CreateNewUser', loginModel).then(
             function successCallback(response) {
                 if (response.status == 200)
-                {
-                    $scope.BetPlaced = true;
-                }
-
+                    $scope.userCreated = true;
             },
             function failureCallback(response) {
-                $scope.ActionFailed = true;
+                $scope.userCreationFailed = true;
             });
     };
-    ValidateUserInput = function () {
-        if ($scope.bet == "" || $scope.RouletteEvent == "" )
-            return false;
-        //if ($scope.RouletteEvent == "RA 01" || $scope.RouletteEvent == "RA 02") {
-        //    if ($scope.money < 2 || $scope.money > 20) {
-        //        DisplayMinMaxValue();
-        //        return false;
-        //    }
-        //}
-        //if ($scope.RouletteEvent == "RA 11" |$scope.RouletteEvent == "RA 12") {
-        //    if ($scope.money < 5 || $scope.money > 50) {
-        //        DisplayMinMaxValue();
-        //        return false;
-        //    }
-        //}
-        return true;
+    RetrieveUsers = function () {
+        $scope.createNewUser = false;
+        $scope.deleteUser = true;
+        $scope.DisplayStats = false;
+        $http.get('/api/Accout/RetrieveUsers').then(
+            function successCallback(response) {
+                if (response.status == 200)
+                    $scope.userList = response.data;
+            },
+            function failureCallback(response) {
+                
+            }
+        );
     };
-    UpdateBet = function () {
-        $http.put('/api/RouletteEntry/UpdateUserInput/' + $scope.bet + '/' + $scope.userSelectedBet).then(
+    DeleteUser = function () {
+        var response = confirm("Are you sure you want to Delete this user");
+        if (response == true) {
+            $http.delete('/api/Accout/DeleteUser/' + $scope.selectedUser).then(
                 function successCallback(response) {
-                    if (response.status == 204)
-                        $scope.BetPlaced = true;
-                    $scope.updateUserInput = false;
-                    $scope.userSelectedBet = $scope.bet;
+                    if (response.status == 200)
+                        $scope.userDeleted = true;
                 },
                 function failureCallback(response) {
-                    $scope.ActionFailed = true;
-                    $scope.updateUserInput = false;
+                    $scope.failedDelete = true;
+
                 });
-    };
-    $scope.DeleteBet = function () {
-        $http.delete('/api/RouletteEntry/DeleteUserInput/'+ $scope.userSelectedBet).then(
-            function successCallback(response) {
-                if (response.status == 204)
-                    $scope.DeleteUserInput = true;
-            },
-            function failureCallback(response) {
-                $scope.DeleteUserInput = false;
-            });
-    };
-    DisplayMinMaxValue = function () {
-        if ($scope.RouletteEvent == "RA 01") {
-            $scope.range = 'Min Euro 2, Max Euro 20';
-        }
-        if ($scope.RouletteEvent == "RA 11") {
-            $scope.range = 'Min Euro 5, Max Euro 50';
-        }
-        if ($scope.RouletteEvent == "RA 02") {
-            $scope.range = 'Min Euro 2, Max Euro 20';
-        }
-        if ($scope.RouletteEvent == "RA 12") {
-            $scope.range = 'Min Euro 5, Max Euro 50';
         }
     };
     $scope.LogOff = function () {
@@ -154,7 +94,9 @@ app.controller("HomeController", function ($scope, $http) {
         }
     };
     RetrieveStats = function () {
-
+        $scope.createNewUser = false;
+        $scope.deleteUser = false;
+        $scope.DisplayStats = true;
         $http.get('/api/RouletteEntry/RetrieveOddEvenStats/true')
             .then(function successCallback(response) {
                 if (response.data.Odd == undefined && response.data.Even == undefined)
@@ -202,7 +144,7 @@ app.controller("HomeController", function ($scope, $http) {
                 function failureCallback(response) {
                     $scope.ZeroFailure = true;
 
-            });
+                });
         $http.get('/api/RouletteEntry/LastTwelveBet/true')
             .then(function successCallback(response) {
                 if (response.data.length == 0)
@@ -215,5 +157,11 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $scope.StatsVisible = true;
 
-    }
+    };
+    EnableUserCreation = function () {
+        $scope.DisplayStats = false;
+        $scope.deleteUser = false;
+        $scope.createNewUser = true;
+        $scope.$digest();
+    };
 });

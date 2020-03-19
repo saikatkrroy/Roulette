@@ -1,6 +1,8 @@
 ﻿
 using Roulette.DataAccess.Models;
 using Roulette.Security.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Roulette.Security.Interfaces
 {
@@ -12,6 +14,7 @@ namespace Roulette.Security.Interfaces
         string GetAuthTokenForProxyUser(Users user);
         string Login(LoginModel loginModel);
         string HashPassword(string password, string salt);
-
+        IList<String> RetrieveUsers();
+        void DeleteUser(string userId); 
     }
 }

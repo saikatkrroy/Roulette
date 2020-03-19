@@ -23,11 +23,9 @@
                     <option value="">Please choose...</option>
                     <option ng-repeat="rouletteEvent in Data.Item2" ng-bind:value="rouletteEvent">{{ rouletteEvent.EventName }}</option>
                 </select>
-                <p>
-                    Please enter bet Amount <br>(RouletteEvent:RA01 Min:2 Euro Max:20 Euro<br>RouletteEvent:RA11 Min:5 Euro Max:50 Euro
-                    <br>RouletteEvent:RA02 Min:2 Euro Max:20 Euro
-                    <br>RouletteEvent:RA12 Min:5 Euro Max:50 Euro)
-                </p>
+                @*<p>
+                    Please enter bet Amount
+                </p>*@
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
             </form>
             <p ng-show="BetPlaced">Your Bet is Placed</p>
@@ -36,9 +34,13 @@
             <p ng-show="!formValidated">Please check all the fields</p>
             <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UserInputUpdate()" />
             <input type="button" value="Delete Placed Bet" ng-show="BetPlaced" ng-click="DeleteBet()" />
-            <input type="button" value="LogOff" ng-click="LogOff()" />
+            
             <input type="submit" value="Find my Statistics" onclick="RetrieveStats()" />
             <div ng-show="StatsVisible" style="background-color:blue">
+                <p style="color:white">Last Twelve Bets</p>
+                <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Last Twelve Bets. Please contact system administrator.</p>
+                <div style="background-color:white" ng-show="!LastTwelveBetFailure"><p ng-repeat="LastTwelveBet in LastTwelveBets" ng-style="{'color':LastTwelveBet.Color.Name}">{{LastTwelveBet.Number}}</p></div>
+
                 <p style="color:white">Odd vs Even Statistics:</p>
                 <p style="color:red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
                 <div ng-show="!OddEvenStatsFailure">

@@ -30,7 +30,7 @@ namespace Roulette.Controllers
             var authToken=_accountServices.Login(loginModel);
             
             string host = System.Web.HttpContext.Current.Request.Url.Authority;
-            var url = "http://" + host + "/Home/Index";
+            var url = "http://" + host + "/UserManagement/Index";
             Authorisation.AuthToken = authToken;
             return Request.CreateResponse(HttpStatusCode.OK,new { RedirectUrl=url,AuthToken=authToken});
         }
@@ -50,6 +50,19 @@ namespace Roulette.Controllers
         public Users CreateNewUser(LoginModel loginModel)
         {
             return _accountServices.CreateNewUser(loginModel);
+        }
+
+        [HttpGet]
+        [Route("api/Account/RetrieveUsers")]
+        public IList<String> RetrieveUsers()
+        {
+            return _accountServices.RetrieveUsers();
+        }
+        [HttpDelete]
+        [Route("api/Account/DeleteUser/{userId}")]
+        public void DeleteUser([FromUri] string userId)
+        {
+             _accountServices.DeleteUser(userId);
         }
     }
 }
