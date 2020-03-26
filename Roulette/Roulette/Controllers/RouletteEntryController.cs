@@ -34,9 +34,9 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/UserInputUpdate")]
         public void UserInputUpdate()
         {
-            var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
+            //var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
             Logs log = new Logs();
-            var logList = _logRepository.Find(l => l.UserId == userSession.UserId && l.UserSessionLogs.LogOutTime == null);
+            var logList = _logRepository.Find();
             log = (from logs in logList
                         orderby logs.Id descending
                         select logs).Take(1).Single();
@@ -239,7 +239,7 @@ namespace Roulette.Controllers
             {
                 NumberId = number.Id,
                 RouletteEventId = rouletteEvent.Id,
-                //SBetPlaced = betModel.betPlaced,
+                //BetPlaced = betModel.betPlaced,
                 UpdateFlag = false,
             };
             _logRepository.Insert(log);
@@ -249,10 +249,10 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/UpdateUserInput/{value}/{existingEntry}")]
         public void UpdateUserInput([FromUri]int value, [FromUri]int existingEntry)
         {
-            var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
-            if (userSession == null)
-                throw new Exception("Invalid User");
-            var logList = _logRepository.Find(l => l.NumberId == existingEntry && l.UserId == userSession.UserId);
+            //var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
+            //if (userSession == null)
+            //    throw new Exception("Invalid User");
+            var logList = _logRepository.Find(l => l.NumberId == existingEntry);
             var log = (from logs in logList
                        orderby logs.Id descending
                        select logs).Take(1).Single();
@@ -266,10 +266,10 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/DeleteUserInput/{existingEntry}")]
         public void DeleteUserInput([FromUri]string existingEntry)
         {
-            var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
-            if (userSession == null)
-                throw new Exception("Invalid User");
-            var logList = _logRepository.Find(l => l.Number.Number == existingEntry && l.UserId == userSession.UserId);
+            //var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
+            //if (userSession == null)
+            //    throw new Exception("Invalid User");
+            var logList = _logRepository.Find(l => l.Number.Number == existingEntry );
             var log = (from logs in logList
                        orderby logs.Id descending
                        select logs).Take(1).Single();
