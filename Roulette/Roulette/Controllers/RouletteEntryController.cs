@@ -229,19 +229,17 @@ namespace Roulette.Controllers
         [Route("api/RouletteEntry/CreateUserInput")]
         public void CreateUserInput([FromBody]BetModel betModel)
         {
-            var userSession=_userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
-            if (userSession == null)
-                throw new Exception("Invalid User");
+            //var userSession=_userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
+            //if (userSession == null)
+            //    throw new Exception("Invalid User");
 
             var number = _numberRepository.FindSingleOrNull(n => n.Number == betModel.value);
             var rouletteEvent = _rouletteEventsRepository.Find(r =>r.EventName== betModel.rouletteEventName).Single();
             var log = new Logs()
             {
                 NumberId = number.Id,
-                UserId = userSession.User.Id,
                 RouletteEventId = rouletteEvent.Id,
                 //SBetPlaced = betModel.betPlaced,
-                UserSessionLogId = Authorisation.UserSessionLogId,
                 UpdateFlag = false,
             };
             _logRepository.Insert(log);

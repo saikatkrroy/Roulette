@@ -123,6 +123,10 @@
     <Compile Include="Migrations\202003060141003_Update Zero odd even factor.Designer.cs">
       <DependentUpon>202003060141003_Update Zero odd even factor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003260420263_make userid nullable.cs" />
+    <Compile Include="Migrations\202003260420263_make userid nullable.Designer.cs">
+      <DependentUpon>202003260420263_make userid nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003060141003_Update Zero odd even factor.resx">
       <DependentUpon>202003060141003_Update Zero odd even factor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003260420263_make userid nullable.resx">
+      <DependentUpon>202003260420263_make userid nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

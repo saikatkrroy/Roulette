@@ -12,12 +12,51 @@
         <div ng-app="Roulette" ng-controller="HomeController" ng-cloak>
             <p ng-show="UpdateUserInput">Please enter your new bet here</p>
             <form onsubmit="PlaceYourBet()">
-                <p>Enter your Bet:</p>
+                <p>Select your Bet:</p>
                 <p style="color:red" ng-show="NumberLoadFailed"> Failed to load numbers</p>
-                <select ng-model="bet" ng-show="!NumberLoadFailed" ng-change="Clicked = 0">
+                @*<select ng-model="bet" ng-show="!NumberLoadFailed" ng-change="Clicked = 0">
                     <option value="">Please choose...</option>
                     <option ng-repeat="number in Data.Item1" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
-                </select>
+                </select>*@
+                <div>
+                    <input type="button" style="color:white;background-color:green" value="0" ng-click="bet=0" />
+                    <input type="button" style="color:white;background-color:red" value="1" ng-click="bet=1" />
+                    <input type="button" style="color:white;background-color:black" value="2" ng-click="bet=2" />
+                    <input type="button" style="color:white;background-color:red" value="3" ng-click="bet=3" />
+                    <input type="button" style="color:white;background-color:black" value="4" ng-click="bet=4" />
+                    <input type="button" style="color:white;background-color:red" value="5" ng-click="bet=5" />
+                    <input type="button" style="color:white;background-color:black" value="6" ng-click="bet=6" />
+                    <input type="button" style="color:white;background-color:red" value="7" ng-click="bet=7" />
+                    <input type="button" style="color:white;background-color:black" value="8" ng-click="bet=8" />
+                    <input type="button" style="color:white;background-color:red" value="9" ng-click="bet=9" />
+                    <input type="button" style="color:white;background-color:black" value="10" ng-click="bet=10" />
+                    <input type="button" style="color:white;background-color:black" value="11" ng-click="bet=11" />
+                    <input type="button" style="color:white;background-color:red" value="12" ng-click="bet=12" />
+                    <input type="button" style="color:white;background-color:black" value="13" ng-click="bet=13" />
+                    <input type="button" style="color:white;background-color:red" value="14" ng-click="bet=14" />
+                    <input type="button" style="color:white;background-color:black" value="15" ng-click="bet=15" />
+                    <input type="button" style="color:white;background-color:red" value="16" ng-click="bet=16" />
+                    <input type="button" style="color:white;background-color:black" value="17" ng-click="bet=17" />
+                    <input type="button" style="color:white;background-color:red" value="18" ng-click="bet=18" />
+                    <input type="button" style="color:white;background-color:black" value="19" ng-click="bet=19" />
+                    <input type="button" style="color:white;background-color:black" value="20" ng-click="bet=20" />
+                    <input type="button" style="color:white;background-color:red" value="21" ng-click="bet=21" />
+                    <input type="button" style="color:white;background-color:black" value="22" ng-click="bet=22" />
+                    <input type="button" style="color:white;background-color:red" value="23" ng-click="bet=23" />
+                    <input type="button" style="color:white;background-color:black" value="24" ng-click="bet=24" />
+                    <input type="button" style="color:white;background-color:red" value="25" ng-click="bet=25" />
+                    <input type="button" style="color:white;background-color:black" value="26" ng-click="bet=26" />
+                    <input type="button" style="color:white;background-color:red" value="27" ng-click="bet=27" />
+                    <input type="button" style="color:white;background-color:black" value="28" ng-click="bet=28" />
+                    <input type="button" style="color:white;background-color:black" value="29" ng-click="bet=29" />
+                    <input type="button" style="color:white;background-color:red" value="30" ng-click="bet=30" />
+                    <input type="button" style="color:white;background-color:black" value="31" ng-click="bet=31" />
+                    <input type="button" style="color:white;background-color:red" value="32" ng-click="bet=32" />
+                    <input type="button" style="color:white;background-color:black" value="33" ng-click="bet=33" />
+                    <input type="button" style="color:white;background-color:red" value="34" ng-click="bet=34" />
+                    <input type="button" style="color:white;background-color:black" value="35" ng-click="bet=35" />
+                    <input type="button" style="color:white;background-color:red" value="36" ng-click="bet=36" />
+                </div>
                 <p>Please Select Roulette Event:</p>
                 <select ng-model="RouletteEvent" onchange="DisplayMinMaxValue()">
                     <option value="">Please choose...</option>
