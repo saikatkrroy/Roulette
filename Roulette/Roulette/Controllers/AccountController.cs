@@ -27,10 +27,12 @@ namespace Roulette.Controllers
         [Route("api/Account/Login")]
         public object Login(LoginModel loginModel)
         {
+            string host = System.Web.HttpContext.Current.Request.Url.Authority;
+            String url ="http://" + host + "/Home/Index";
             var authToken=_accountServices.Login(loginModel);
             
-            string host = System.Web.HttpContext.Current.Request.Url.Authority;
-            var url = "http://" + host + "/UserManagement/Index";
+            if(loginModel.Username.ToLower().Contains("admin"))
+                url = "http://" + host + "/UserManagement/Index";
             Authorisation.AuthToken = authToken;
             return Request.CreateResponse(HttpStatusCode.OK,new { RedirectUrl=url,AuthToken=authToken});
         }

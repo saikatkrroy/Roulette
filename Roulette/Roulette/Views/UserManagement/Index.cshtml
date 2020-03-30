@@ -53,6 +53,7 @@
                                 <input type="submit" value="Delete" ng-click="DeleteUser()" />
                             </form>
                             <p ng-show="failedDelete" class="text-danger">Failed to Delete User.<br>It is possible that the username already Deleted.</p>
+                            <p ng-show="userDeleted" class="text-danger">User Deleted.</p>
                         </div>
                         <div ng-show="DisplayStats">
                             <div ng-show="StatsVisible" style="background-color:blue">

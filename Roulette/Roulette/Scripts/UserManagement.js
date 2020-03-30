@@ -45,7 +45,7 @@ app.controller("HomeController", function ($scope, $http) {
         var loginModel = { "Username": $scope.userIdNew, "Password": $scope.passwordNew };
         $http.post('/api/Account/CreateNewUser', loginModel).then(
             function successCallback(response) {
-                if (response.status == 200)
+                if (response.status === 200)
                     $scope.userCreated = true;
             },
             function failureCallback(response) {
@@ -56,9 +56,9 @@ app.controller("HomeController", function ($scope, $http) {
         $scope.createNewUser = false;
         $scope.deleteUser = true;
         $scope.DisplayStats = false;
-        $http.get('/api/Accout/RetrieveUsers').then(
+        $http.get('/api/Account/RetrieveUsers').then(
             function successCallback(response) {
-                if (response.status == 200)
+                if (response.status === 200)
                     $scope.userList = response.data;
             },
             function failureCallback(response) {
@@ -69,10 +69,11 @@ app.controller("HomeController", function ($scope, $http) {
     DeleteUser = function () {
         var response = confirm("Are you sure you want to Delete this user");
         if (response == true) {
-            $http.delete('/api/Accout/DeleteUser/' + $scope.selectedUser).then(
+            $http.delete('/api/Account/DeleteUser/' + $scope.selectedUser).then(
                 function successCallback(response) {
-                    if (response.status == 200)
+                    if (response.status === 200)
                         $scope.userDeleted = true;
+                    //window.location.reload();
                 },
                 function failureCallback(response) {
                     $scope.failedDelete = true;
@@ -84,7 +85,7 @@ app.controller("HomeController", function ($scope, $http) {
         var response = confirm("Are you sure you want to LogOut");
         if (response == true) {
             $http.post('/api/Account/Logoff').then(function successCallback(response) {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     window.location.href = response.data.RedirectUrl;
                 }
             },
@@ -119,7 +120,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $http.get('/api/RouletteEntry/RetrieveCoolNumber/true')
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     $scope.CoolNumberFailure = true;
                 else
                     $scope.CoolNumbers = JSON.parse(JSON.stringify(response.data));
@@ -129,7 +130,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $http.get('/api/RouletteEntry/RetrieveHotNumber/true')
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     $scope.HotNumberFailure = true;
                 else
                     $scope.HotNumbers = JSON.parse(JSON.stringify(response.data));
@@ -147,7 +148,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $http.get('/api/RouletteEntry/LastTwelveBet/true')
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     $scope.LastTwelveBetFailure = true;
                 else
                     $scope.LastTwelveBets = JSON.parse(JSON.stringify(response.data));

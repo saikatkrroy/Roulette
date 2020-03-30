@@ -74,4 +74,17 @@ app.controller("HomeController", function ($scope, $http) {
             function failureCallback(response) {
                 $scope.LastTwelveBetFailure = true;
             });
+    $scope.LogOff = function () {
+        var response = confirm("Are you sure you want to LogOut");
+        if (response === true) {
+            $http.post('/api/Account/Logoff').then(function successCallback(response) {
+                    if (response.status === 200) {
+                        window.location.href = response.data.RedirectUrl;
+                    }
+                },
+                function failureCallback(response) {
+                    $scope.LoginFailed = true;
+                });
+        }
+    };
 });

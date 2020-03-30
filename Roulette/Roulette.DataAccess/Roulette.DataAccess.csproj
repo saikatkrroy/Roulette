@@ -127,6 +127,10 @@
     <Compile Include="Migrations\202003260420263_make userid nullable.Designer.cs">
       <DependentUpon>202003260420263_make userid nullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003290121246_add admin user to system.cs" />
+    <Compile Include="Migrations\202003290121246_add admin user to system.Designer.cs">
+      <DependentUpon>202003290121246_add admin user to system.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -192,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003260420263_make userid nullable.resx">
       <DependentUpon>202003260420263_make userid nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290121246_add admin user to system.resx">
+      <DependentUpon>202003290121246_add admin user to system.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

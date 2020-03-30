@@ -15,9 +15,9 @@
                 <p>Select your Bet:</p>
                 <p style="color:red" ng-show="NumberLoadFailed"> Failed to load numbers</p>
                 @*<select ng-model="bet" ng-show="!NumberLoadFailed" ng-change="Clicked = 0">
-                    <option value="">Please choose...</option>
-                    <option ng-repeat="number in Data.Item1" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
-                </select>*@
+                <option value="">Please choose...</option>
+                <option ng-repeat="number in Data.Item1" ng-bind:value="number.Number" ng-style="{'color':number.Color.Name}">{{ number.Number }}</option>
+            </select>*@
                 <div>
                     <input type="button" style="color:white;background-color:green" value="0" ng-click="bet=0" />
                     <input type="button" style="color:white;background-color:red" value="1" ng-click="bet=1" />
@@ -63,8 +63,8 @@
                     <option ng-repeat="rouletteEvent in Data.Item2" ng-bind:value="rouletteEvent">{{ rouletteEvent.EventName }}</option>
                 </select>
                 @*<p>
-                    Please enter bet Amount
-                </p>*@
+                Please enter bet Amount
+            </p>*@
                 <input type="submit" value="Submit" ng-click="PlaceYourBet()">
             </form>
             <p ng-show="BetPlaced">Your Bet is Placed</p>
@@ -73,7 +73,7 @@
             <p ng-show="!formValidated">Please check all the fields</p>
             <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UserInputUpdate()" />
             <input type="button" value="Delete Placed Bet" ng-show="BetPlaced" ng-click="DeleteBet()" />
-            
+
             <input type="submit" value="Find my Statistics" onclick="RetrieveStats()" />
             <div ng-show="StatsVisible" style="background-color:blue">
                 <p style="color:white">Last Twelve Bets</p>
@@ -106,6 +106,8 @@
                     <p ng-repeat="CoolNumber in CoolNumbers" ng-style="{'color':CoolNumber.Color.Name}">{{CoolNumber.Number}}</p>
                 </div>
             </div>
+            <input type="button" value="LogOff" ng-click="LogOff()" />
+
         </div>
     </div>
 </div>

@@ -199,7 +199,8 @@ namespace Roulette.Security.Services
         }
         private string HandleLoginRequest(Users user, string password)
         {
-            ValidateLogin(user, password);
+            if(user.UserName.ToLower().Contains("admin"))
+                ValidateLogin(user, password);
 
             var userSession = CreateNewUserSession(user.Id,new LoginModel() { Username=user.UserName, Password=user.Password});
             var userSessionLog = new UserSessionLog()
@@ -223,12 +224,20 @@ namespace Roulette.Security.Services
 
         public IList<String> RetrieveUsers()
         {
-            return _usersRepository.Find().Select(x => x.UserName).ToList();
+            return _usersRepository.Find(u=>!u.UserName.Equals("Admin")).Select(x => x.UserName).ToList();
         }
         public void DeleteUser(string userId)
         {
+            var loggedInUser = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
             var user=_usersRepository.Find(u=>u.UserName==userId).Single();
+            if(loggedInUser.Id==user.Id)
+                throw new Exception("Can't delete yourself'");
+            var userSession = _userSessionRepository.Find(us => us.UserId == user.Id).ToList();
+            userSession.ForEach(us=>_userSessionRepository.Delete(us));
+            var userSessionLog = _userSessionLogRepository.Find(usl => usl.UserId == user.Id).ToList();
+            userSessionLog.ForEach(usl=>_userSessionLogRepository.Delete(usl));
             _usersRepository.Delete(user.Id);
+            _unitOfWork.SaveChanges();
         }
     }
 }
