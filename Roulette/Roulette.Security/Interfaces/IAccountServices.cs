@@ -15,6 +15,7 @@ namespace Roulette.Security.Interfaces
         string Login(LoginModel loginModel);
         string HashPassword(string password, string salt);
         IList<String> RetrieveUsers();
-        void DeleteUser(string userId); 
+        void DeleteUser(string userId);
+        bool ValidateUserAccess(string authToken);
     }
 }

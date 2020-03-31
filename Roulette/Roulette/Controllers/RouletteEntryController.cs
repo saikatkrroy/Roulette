@@ -16,6 +16,7 @@ namespace Roulette.Controllers
         IRepository<Logs> _logRepository { get; set; }
         IRepository<Numbers> _numberRepository { get; set; }
         IRepository<UserSessions> _userSessionRepository { get; set; }
+        IRepository<UserSessionLog> _userSessionLogRepository { get; set; }
         IRepository<Users> _userRepository { get; set; }
         IRepository<RouletteEvents> _rouletteEventsRepository { get; set; }
         IUnitOfWork _unitofWork { get; set; }
@@ -28,6 +29,8 @@ namespace Roulette.Controllers
             _userSessionRepository = new Repository<UserSessions>(rouletteDbContext);
             _userRepository = new Repository<Users>(rouletteDbContext);
             _rouletteEventsRepository = new Repository<RouletteEvents>(rouletteDbContext);
+            _userSessionLogRepository = new Repository<UserSessionLog>(rouletteDbContext);
+
             _unitofWork = new UnitOfWork(rouletteDbContext);
         }
         [HttpGet]

@@ -36,12 +36,18 @@ namespace Roulette.Security.Services
         }
         public Users CreateNewUser(LoginModel person, bool isEmailUsername = true)
         {
+            string salt = "";
+            string pwdHash="";
             var userSearch = _usersRepository.Find(u => u.UserName == person.Username);
             if (userSearch.Count() != 0)
                 throw new Exception("Username already exists");
-            ValidateUserNameAndPassword(person.Username, person.Password, isEmailUsername);
-            string salt = CreateRandomToken();
-            string pwdHash = HashPassword(person.Password, salt);
+            if (person.Username.ToLower().Contains("admin"))
+            {
+                ValidateUserNameAndPassword(person.Username, person.Password, isEmailUsername);
+                salt = CreateRandomToken();
+                pwdHash = HashPassword(person.Password, salt);
+            }
+
             var user = new Users()
             {
                 UserName = person.Username,
@@ -232,12 +238,23 @@ namespace Roulette.Security.Services
             var user=_usersRepository.Find(u=>u.UserName==userId).Single();
             if(loggedInUser.Id==user.Id)
                 throw new Exception("Can't delete yourself'");
+            var userLog = _logRepository.Find(ul => ul.UserId == user.Id).ToList();
+            userLog.ForEach(ul => ul.UserSessionLogId = null); 
             var userSession = _userSessionRepository.Find(us => us.UserId == user.Id).ToList();
             userSession.ForEach(us=>_userSessionRepository.Delete(us));
             var userSessionLog = _userSessionLogRepository.Find(usl => usl.UserId == user.Id).ToList();
             userSessionLog.ForEach(usl=>_userSessionLogRepository.Delete(usl));
             _usersRepository.Delete(user.Id);
+            
             _unitOfWork.SaveChanges();
+        }
+
+        public bool ValidateUserAccess(string authToken)
+        {
+            var userSession=_userSessionRepository.Find(us => us.AuthToken.Equals(authToken)).Single();
+            if (userSession.User.UserName.ToLower().Contains("admin"))
+                return true;
+            return false;
         }
     }
 }

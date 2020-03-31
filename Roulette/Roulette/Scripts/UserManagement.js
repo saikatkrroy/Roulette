@@ -1,5 +1,5 @@
 ﻿var app = angular.module("Roulette", []);
-app.controller("HomeController", function ($scope, $http) {
+app.controller("HomeController", function ($scope, $http, $timeout) {
     $scope.LoginFailed = false;
     $scope.userIdNew = '';
     $scope.passwordNew = '';
@@ -50,6 +50,8 @@ app.controller("HomeController", function ($scope, $http) {
             },
             function failureCallback(response) {
                 $scope.userCreationFailed = true;
+                $scope.userCreated = false;
+
             });
     };
     RetrieveUsers = function () {
@@ -73,7 +75,7 @@ app.controller("HomeController", function ($scope, $http) {
                 function successCallback(response) {
                     if (response.status === 200)
                         $scope.userDeleted = true;
-                    //window.location.reload();
+                    RetrieveUsers();
                 },
                 function failureCallback(response) {
                     $scope.failedDelete = true;

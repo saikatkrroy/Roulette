@@ -40,27 +40,27 @@ app.controller("HomeController", function ($scope, $http) {
             function failureCallback(response) {
                 var data = response.Data;
             });
-    //$http.get('/api/RouletteEntry/UserInputUpdateData').then(
-    //    function successCallback(response) {
-    //        if (response.status == 200) {
-    //            $scope.bet = response.data.Number.Number;
-    //            $scope.RouletteEvent = response.data.RouletteEvent.EventName;
-    //            $scope.money = response.data.BetPlaced;
-    //        }
+    $http.get('/api/RouletteEntry/UserInputUpdateData').then(
+        function successCallback(response) {
+            if (response.status == 200) {
+                $scope.bet = response.data.Number.Number;
+                $scope.RouletteEvent = response.data.RouletteEvent.EventName;
+                $scope.money = response.data.BetPlaced;
+            }
 
-    //    },
-    //    function failureCallback(response) {
-    //        $scope.ActionFailed = true;
-    //    });
+        },
+        function failureCallback(response) {
+            $scope.ActionFailed = true;
+        });
     PlaceYourBet = function () {
         $scope.formValidated=ValidateUserInput();
 
-        if ($scope.updateUserInput == false && $scope.formValidated==true) {
+        if ($scope.updateUserInput === false && $scope.formValidated === true) {
             $scope.userSelectedBet = $scope.bet;
             var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent };
             $http.post('/api/RouletteEntry/CreateUserInput/', betModel).then(
                 function successCallback(response) {
-                    if (response.status == 204)
+                    if (response.status === 204)
                         $scope.BetPlaced = true;
 
                 },
@@ -68,7 +68,7 @@ app.controller("HomeController", function ($scope, $http) {
                     $scope.ActionFailed = true;
                 });
         }
-        if ($scope.Clicked >= 0 && $scope.updateUserInput == true) {
+        if ($scope.updateUserInput === true) {
             UpdateBet();
         }
     };
@@ -76,7 +76,7 @@ app.controller("HomeController", function ($scope, $http) {
         $scope.updateUserInput = true;
         $http.get('/api/RouletteEntry/UserInputUpdate').then(
             function successCallback(response) {
-                if (response.status == 200)
+                if (response.status === 200)
                 {
                     $scope.BetPlaced = true;
                 }
@@ -87,7 +87,7 @@ app.controller("HomeController", function ($scope, $http) {
             });
     };
     ValidateUserInput = function () {
-        if ($scope.bet == "" || $scope.RouletteEvent == "" )
+        if ($scope.bet === "" || $scope.RouletteEvent === "" )
             return false;
         //if ($scope.RouletteEvent == "RA 01" || $scope.RouletteEvent == "RA 02") {
         //    if ($scope.money < 2 || $scope.money > 20) {
@@ -106,7 +106,7 @@ app.controller("HomeController", function ($scope, $http) {
     UpdateBet = function () {
         $http.put('/api/RouletteEntry/UpdateUserInput/' + $scope.bet + '/' + $scope.userSelectedBet).then(
                 function successCallback(response) {
-                    if (response.status == 204)
+                    if (response.status === 204)
                         $scope.BetPlaced = true;
                     $scope.updateUserInput = false;
                     $scope.userSelectedBet = $scope.bet;
@@ -119,7 +119,7 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.DeleteBet = function () {
         $http.delete('/api/RouletteEntry/DeleteUserInput/'+ $scope.userSelectedBet).then(
             function successCallback(response) {
-                if (response.status == 204)
+                if (response.status === 204)
                     $scope.DeleteUserInput = true;
             },
             function failureCallback(response) {
@@ -127,16 +127,16 @@ app.controller("HomeController", function ($scope, $http) {
             });
     };
     DisplayMinMaxValue = function () {
-        if ($scope.RouletteEvent == "RA 01") {
+        if ($scope.RouletteEvent === "RA 01") {
             $scope.range = 'Min Euro 2, Max Euro 20';
         }
-        if ($scope.RouletteEvent == "RA 11") {
+        if ($scope.RouletteEvent === "RA 11") {
             $scope.range = 'Min Euro 5, Max Euro 50';
         }
-        if ($scope.RouletteEvent == "RA 02") {
+        if ($scope.RouletteEvent === "RA 02") {
             $scope.range = 'Min Euro 2, Max Euro 20';
         }
-        if ($scope.RouletteEvent == "RA 12") {
+        if ($scope.RouletteEvent === "RA 12") {
             $scope.range = 'Min Euro 5, Max Euro 50';
         }
     };
@@ -177,7 +177,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $http.get('/api/RouletteEntry/RetrieveCoolNumber/true')
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     $scope.CoolNumberFailure = true;
                 else
                     $scope.CoolNumbers = JSON.parse(JSON.stringify(response.data));
@@ -187,7 +187,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         $http.get('/api/RouletteEntry/RetrieveHotNumber/true')
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     $scope.HotNumberFailure = true;
                 else
                     $scope.HotNumbers = JSON.parse(JSON.stringify(response.data));
@@ -205,7 +205,7 @@ app.controller("HomeController", function ($scope, $http) {
             });
         $http.get('/api/RouletteEntry/LastTwelveBet/true')
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     $scope.LastTwelveBetFailure = true;
                 else
                     $scope.LastTwelveBets = JSON.parse(JSON.stringify(response.data));

@@ -10,6 +10,12 @@
 <div class="row">
     <div class="col-md-4" >
         <div ng-app="Roulette" ng-controller="HomeController" ng-cloak>
+            <div style="position: fixed; background-color: greenyellow">
+                <a onclick="RetrieveStats()">Find my Statistics</a>&nbsp;&nbsp;
+                <a ng-click="LogOff()">LogOff</a>
+            </div>
+            <br />
+            <br />
             <p ng-show="UpdateUserInput">Please enter your new bet here</p>
             <form onsubmit="PlaceYourBet()">
                 <p>Select your Bet:</p>
@@ -73,8 +79,7 @@
             <p ng-show="!formValidated">Please check all the fields</p>
             <input type="button" value="Update Placed Bet" ng-show="BetPlaced" ng-click="UserInputUpdate()" />
             <input type="button" value="Delete Placed Bet" ng-show="BetPlaced" ng-click="DeleteBet()" />
-
-            <input type="submit" value="Find my Statistics" onclick="RetrieveStats()" />
+            
             <div ng-show="StatsVisible" style="background-color:blue">
                 <p style="color:white">Last Twelve Bets</p>
                 <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Last Twelve Bets. Please contact system administrator.</p>
@@ -106,7 +111,6 @@
                     <p ng-repeat="CoolNumber in CoolNumbers" ng-style="{'color':CoolNumber.Color.Name}">{{CoolNumber.Number}}</p>
                 </div>
             </div>
-            <input type="button" value="LogOff" ng-click="LogOff()" />
 
         </div>
     </div>
