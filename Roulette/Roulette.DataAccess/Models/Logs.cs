@@ -14,6 +14,7 @@ namespace Roulette.DataAccess.Models
         public double? BetPlaced { get; set; }
         public bool? UpdateFlag { get; set; }
         public bool? DeleteFlag { get; set; }
+        public virtual Users Supervisor { get; set; }
         public virtual RouletteEvents RouletteEvent { get; set; }
         public virtual Numbers Number { get; set; }
         public virtual Users User { get; set; }
