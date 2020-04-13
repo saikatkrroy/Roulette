@@ -29,6 +29,8 @@ app.controller("HomeController", function ($scope, $http) {
     $scope.ZeroFailure = false;
     $scope.StatsVisible = false;
     $scope.Zero = '';
+    $scope.userList = [];
+    $scope.supervisor = '';
     $http.get('/api/RouletteEntry/RetrieveData')
         .then(function successCallback(response) {
             if (response.data == null)
@@ -40,6 +42,15 @@ app.controller("HomeController", function ($scope, $http) {
             function failureCallback(response) {
                 var data = response.Data;
             });
+    $http.get('/api/Account/RetrieveUsers').then(
+        function successCallback(response) {
+            if (response.status === 200)
+                $scope.userList = response.data;
+        },
+        function failureCallback(response) {
+
+        }
+    );
     $http.get('/api/RouletteEntry/UserInputUpdateData').then(
         function successCallback(response) {
             if (response.status == 200) {
@@ -57,7 +68,7 @@ app.controller("HomeController", function ($scope, $http) {
 
         if ($scope.updateUserInput === false && $scope.formValidated === true) {
             $scope.userSelectedBet = $scope.bet;
-            var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent };
+            var betModel = { "value": $scope.bet, "rouletteEventName": $scope.RouletteEvent, "supervisor": $scope.supervisor };
             $http.post('/api/RouletteEntry/CreateUserInput/', betModel).then(
                 function successCallback(response) {
                     if (response.status === 204)
@@ -153,67 +164,72 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         }
     };
-    RetrieveStats = function () {
+    RetrieveStats = function() {
 
         $http.get('/api/RouletteEntry/RetrieveOddEvenStats/true')
             .then(function successCallback(response) {
-                if (response.data.Odd == undefined && response.data.Even == undefined)
-                    $scope.OddEvenStatsFailure = true;
-                else
-                    $scope.OddEvenStats = JSON.parse(JSON.stringify(response.data));
-            },
+                    if (response.data.Odd == undefined && response.data.Even == undefined)
+                        $scope.OddEvenStatsFailure = true;
+                    else
+                        $scope.OddEvenStats = JSON.parse(JSON.stringify(response.data));
+                },
                 function failureCallback(response) {
                     $scope.OddEvenStatsFailure = true;
                 });
         $http.get('/api/RouletteEntry/RetrieveColorStats/true')
             .then(function successCallback(response) {
-                if (response.data.Black == undefined && response.data.Red == undefined)
-                    $scope.ColorStatsFailure = true;
-                else
-                    $scope.ColorStats = JSON.parse(JSON.stringify(response.data));
-            },
+                    if (response.data.Black == undefined && response.data.Red == undefined)
+                        $scope.ColorStatsFailure = true;
+                    else
+                        $scope.ColorStats = JSON.parse(JSON.stringify(response.data));
+                },
                 function failureCallback(response) {
                     $scope.ColorStatsFailure = true;
                 });
         $http.get('/api/RouletteEntry/RetrieveCoolNumber/true')
             .then(function successCallback(response) {
-                if (response.data.length === 0)
-                    $scope.CoolNumberFailure = true;
-                else
-                    $scope.CoolNumbers = JSON.parse(JSON.stringify(response.data));
-            },
+                    if (response.data.length === 0)
+                        $scope.CoolNumberFailure = true;
+                    else
+                        $scope.CoolNumbers = JSON.parse(JSON.stringify(response.data));
+                },
                 function failureCallback(response) {
                     $scope.CoolNumberFailure = true;
                 });
         $http.get('/api/RouletteEntry/RetrieveHotNumber/true')
             .then(function successCallback(response) {
-                if (response.data.length === 0)
-                    $scope.HotNumberFailure = true;
-                else
-                    $scope.HotNumbers = JSON.parse(JSON.stringify(response.data));
-            },
+                    if (response.data.length === 0)
+                        $scope.HotNumberFailure = true;
+                    else
+                        $scope.HotNumbers = JSON.parse(JSON.stringify(response.data));
+                },
                 function failureCallback(response) {
                     $scope.HotNumberFailure = true;
                 });
         $http.get('/api/RouletteEntry/RetrieveZeroPercentage/true')
             .then(function successCallback(response) {
-                $scope.Zero = JSON.parse(JSON.stringify(response.data));
-            },
+                    $scope.Zero = JSON.parse(JSON.stringify(response.data));
+                },
                 function failureCallback(response) {
                     $scope.ZeroFailure = true;
 
-            });
+                });
         $http.get('/api/RouletteEntry/LastTwelveBet/true')
             .then(function successCallback(response) {
-                if (response.data.length === 0)
-                    $scope.LastTwelveBetFailure = true;
-                else
-                    $scope.LastTwelveBets = JSON.parse(JSON.stringify(response.data));
-            },
+                    if (response.data.length === 0)
+                        $scope.LastTwelveBetFailure = true;
+                    else
+                        $scope.LastTwelveBets = JSON.parse(JSON.stringify(response.data));
+                },
                 function failureCallback(response) {
                     $scope.LastTwelveBetFailure = true;
                 });
         $scope.StatsVisible = true;
 
-    }
+    };
+    window.onunload = function () {
+        LogOff();
+    };
+
+
 });

@@ -51,6 +51,8 @@ namespace Roulette.Security.Services
             var user = new Users()
             {
                 UserName = person.Username,
+                FirstName = person.FirstName,
+                LastName = person.LastName,
                 PasswordSalt = salt,
                 Password = pwdHash,
             };
@@ -154,12 +156,13 @@ namespace Roulette.Security.Services
                                     log.BetPlaced.ToString(),
                                     log.Number.Number.ToString(),
                                     log.RouletteEvent.EventName.ToString(),
-                                    log.CreateDate.ToString()
+                                    log.CreateDate.ToString(),
+                                    log.DeleteFlag==true?"Yes":"No"
                                 }).ToList();
 
                 // Build the file content
                 var csv = new StringBuilder();
-                csv.AppendLine(string.Join(",", "UserName,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time"));
+                csv.AppendLine(string.Join(",", "UserName,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time","Deleted"));
                 allLines.ForEach(line =>
                 {
                     csv.AppendLine(string.Join(",", line));

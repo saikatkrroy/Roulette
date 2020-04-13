@@ -8,10 +8,12 @@ namespace Roulette.DataAccess.Models
         public int Id { get; set; }
         public int NumberId { get; set; }
         public int? UserId { get; set; }
+        public int? SupervisorId { get; set; }
         public int RouletteEventId { get; set; }
         public int? UserSessionLogId { get; set; }
         public double? BetPlaced { get; set; }
         public bool? UpdateFlag { get; set; }
+        public bool? DeleteFlag { get; set; }
         public virtual RouletteEvents RouletteEvent { get; set; }
         public virtual Numbers Number { get; set; }
         public virtual Users User { get; set; }

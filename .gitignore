@@ -16,3 +16,5 @@ Cogstate.Platform/Cogstate.WebServices/App_Data/Cogstate.WebServices.XML
 **/packages/**
 Roulette/Roulette.Security/obj/Debug/Roulette.Security.csproj.FileListAbsolute.txt
 Roulette/UserBetReports/Admin/22.csv
+*.cache
+.csproj.FileListAbsolute.txt

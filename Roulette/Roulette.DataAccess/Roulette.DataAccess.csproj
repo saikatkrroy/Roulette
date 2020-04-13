@@ -131,6 +131,18 @@
     <Compile Include="Migrations\202003290121246_add admin user to system.Designer.cs">
       <DependentUpon>202003290121246_add admin user to system.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004131031282_Add supervisor to log.cs" />
+    <Compile Include="Migrations\202004131031282_Add supervisor to log.Designer.cs">
+      <DependentUpon>202004131031282_Add supervisor to log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004131040513_Add FirstName and LastName to user information.cs" />
+    <Compile Include="Migrations\202004131040513_Add FirstName and LastName to user information.Designer.cs">
+      <DependentUpon>202004131040513_Add FirstName and LastName to user information.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004131051388_Add DeleteFlag to Logs.cs" />
+    <Compile Include="Migrations\202004131051388_Add DeleteFlag to Logs.Designer.cs">
+      <DependentUpon>202004131051388_Add DeleteFlag to Logs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseUpdatableEntity.cs" />
     <Compile Include="Models\Colors.cs" />
@@ -199,6 +211,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003290121246_add admin user to system.resx">
       <DependentUpon>202003290121246_add admin user to system.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131031282_Add supervisor to log.resx">
+      <DependentUpon>202004131031282_Add supervisor to log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131040513_Add FirstName and LastName to user information.resx">
+      <DependentUpon>202004131040513_Add FirstName and LastName to user information.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131051388_Add DeleteFlag to Logs.resx">
+      <DependentUpon>202004131051388_Add DeleteFlag to Logs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -10,5 +10,6 @@ namespace Roulette.Models
         public string value { get; set; }
         public string rouletteEventName { get; set; }
         public double betPlaced { get; set; }
+        public string supervisor { get; set; }
     }
 }

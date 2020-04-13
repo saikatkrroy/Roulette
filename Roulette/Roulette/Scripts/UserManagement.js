@@ -41,8 +41,12 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
     $scope.Zero = '';
     $scope.userList = [];
     $scope.selectedUser = '';
+    $scope.userFirstName = '';
+    $scope.userLastName = '';
+    $scope.selectedUserforStat = '';
+
     CreateNewUser = function () {
-        var loginModel = { "Username": $scope.userIdNew, "Password": $scope.passwordNew };
+        var loginModel = { "Username": $scope.userIdNew, "Password": $scope.passwordNew, "FirstName": $scope.userFirstName, "LastName": $scope.userLastName};
         $http.post('/api/Account/CreateNewUser', loginModel).then(
             function successCallback(response) {
                 if (response.status === 200)
@@ -96,11 +100,9 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
                 });
         }
     };
-    RetrieveStats = function () {
-        $scope.createNewUser = false;
-        $scope.deleteUser = false;
-        $scope.DisplayStats = true;
-        $http.get('/api/RouletteEntry/RetrieveOddEvenStats/true')
+    $scope.RetrieveUserStat = function () {
+        
+        $http.get('/api/RouletteEntry/RetrieveUserOddEvenStats/' + $scope.selectedUserforStat)
             .then(function successCallback(response) {
                 if (response.data.Odd == undefined && response.data.Even == undefined)
                     $scope.OddEvenStatsFailure = true;
@@ -110,7 +112,7 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
                 function failureCallback(response) {
                     $scope.OddEvenStatsFailure = true;
                 });
-        $http.get('/api/RouletteEntry/RetrieveColorStats/true')
+        $http.get('/api/RouletteEntry/RetrieveUserColorStats/' + $scope.selectedUserforStat)
             .then(function successCallback(response) {
                 if (response.data.Black == undefined && response.data.Red == undefined)
                     $scope.ColorStatsFailure = true;
@@ -120,7 +122,7 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
                 function failureCallback(response) {
                     $scope.ColorStatsFailure = true;
                 });
-        $http.get('/api/RouletteEntry/RetrieveCoolNumber/true')
+        $http.get('/api/RouletteEntry/RetrieveUserCoolNumber/' + $scope.selectedUserforStat)
             .then(function successCallback(response) {
                 if (response.data.length === 0)
                     $scope.CoolNumberFailure = true;
@@ -130,7 +132,7 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
                 function failureCallback(response) {
                     $scope.CoolNumberFailure = true;
                 });
-        $http.get('/api/RouletteEntry/RetrieveHotNumber/true')
+        $http.get('/api/RouletteEntry/RetrieveUserHotNumber/' + $scope.selectedUserforStat)
             .then(function successCallback(response) {
                 if (response.data.length === 0)
                     $scope.HotNumberFailure = true;
@@ -140,7 +142,7 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
                 function failureCallback(response) {
                     $scope.HotNumberFailure = true;
                 });
-        $http.get('/api/RouletteEntry/RetrieveZeroPercentage/true')
+        $http.get('/api/RouletteEntry/RetrieveUserZeroPercentage/' + $scope.selectedUserforStat)
             .then(function successCallback(response) {
                 $scope.Zero = JSON.parse(JSON.stringify(response.data));
             },
@@ -148,7 +150,7 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
                     $scope.ZeroFailure = true;
 
                 });
-        $http.get('/api/RouletteEntry/LastTwelveBet/true')
+        $http.get('/api/RouletteEntry/UserLastTwelveBet/' + $scope.selectedUserforStat)
             .then(function successCallback(response) {
                 if (response.data.length === 0)
                     $scope.LastTwelveBetFailure = true;
@@ -166,5 +168,16 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
         $scope.deleteUser = false;
         $scope.createNewUser = true;
         $scope.$digest();
+    };
+    RetrieveUsersForStat = function() {
+        RetrieveUsers();
+        $scope.createNewUser = false;
+        $scope.deleteUser = false;
+        $scope.DisplayStats = true;
+        $scope.$digest();
+
+    };
+    window.onunload = function() {
+        LogOff();
     };
 });

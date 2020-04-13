@@ -19,7 +19,7 @@
                         <input type="button" onclick="RetrieveUsers()" value="Delete User" />
                         <input type="button" onclick="EnableUserCreation()" value="Create New User" />
                         <input type="button" value="LogOff" ng-click="LogOff()" />
-                        <input type="submit" value="Find my Statistics" onclick="RetrieveStats()" />
+                        <input type="submit" value="Find my Statistics" onclick="RetrieveUsersForStat()" />
                         <div ng-show="createNewUser">
                             <h2>Create New User</h2>
                             <form onsubmit="CreateNewUser()">
@@ -27,6 +27,18 @@
                                     <label for="txtUserIdnew" class="control-label">User ID</label>
                                     <div class="controls">
                                         <input name="txtUserIdnew" type="text" ng-model="userIdNew" maxlength="255" id="txtuserIdnew">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="txtUserFirstName" class="control-label">User FirstName</label>
+                                    <div class="controls">
+                                        <input name="txtUserFirstName" type="text" ng-model="userFirstName" maxlength="255" id="txtUserFirstName">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="txtUserLastName" class="control-label">User LastName</label>
+                                    <div class="controls">
+                                        <input name="txtUserLastName" type="text" ng-model="userLastName" maxlength="255" id="txtUserLastName">
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -56,34 +68,45 @@
                             <p ng-show="userDeleted" class="text-danger">User Deleted.</p>
                         </div>
                         <div ng-show="DisplayStats">
-                            <div ng-show="StatsVisible" style="background-color:blue">
-                                <p style="color:white">Last Twelve Bets</p>
-                                <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Last Twelve Bets. Please contact system administrator.</p>
-                                <div style="background-color:white" ng-show="!LastTwelveBetFailure"><p ng-repeat="LastTwelveBet in LastTwelveBets" ng-style="{'color':LastTwelveBet.Color.Name}">{{LastTwelveBet.Number}}</p></div>
+                            <form onsubmit="RetrieveUserStat()">
+                                <select ng-model="selectedUserforStat">
+                                    <option value="">Please choose...</option>
+                                    <option ng-repeat="user in userList" ng-bind:value="user">{{ user }}</option>
+                                </select>
+                                <input type="submit" value="Display Stats" ng-click="RetrieveUserStat()" />
+                            </form>
+                            <div ng-show="StatsVisible" style="background-color: blue">
+                                <p style="color: white">Last Twelve Bets</p>
+                                <p style="color: red" ng-show="HotNumberFailure">Unable to Retrieve Last Twelve Bets. Please contact system administrator.</p>
+                                <div style="background-color: white" ng-show="!LastTwelveBetFailure">
+                                    <p ng-repeat="LastTwelveBet in LastTwelveBets" ng-style="{'color':LastTwelveBet.Color.Name}">{{LastTwelveBet.Number}}</p>
+                                </div>
 
-                                <p style="color:white">Odd vs Even Statistics:</p>
-                                <p style="color:red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
+                                <p style="color: white">Odd vs Even Statistics:</p>
+                                <p style="color: red" ng-show="OddEvenStatsFailure">Unable to Retrieve Odd Even statistics. Please contact system administrator.</p>
                                 <div ng-show="!OddEvenStatsFailure">
-                                    <p style="color:white">Odd:{{OddEvenStats.Odd}}%</p>
-                                    <p style="color:white">Even:{{OddEvenStats.Even}}%</p>
+                                    <p style="color: white">Odd:{{OddEvenStats.Odd}}%</p>
+                                    <p style="color: white">Even:{{OddEvenStats.Even}}%</p>
                                 </div>
-                                <p style="color:white">Color Statistics</p>
-                                <p style="color:red" ng-show="ColorStatsFailure">Unable to Retrieve Color statistics. Please contact system administrator.</p>
+                                <p style="color: white">Color Statistics</p>
+                                <p style="color: red" ng-show="ColorStatsFailure">Unable to Retrieve Color statistics. Please contact system administrator.</p>
                                 <div ng-show="!ColorStatsFailure">
-                                    <p style="color:white">Black:{{ColorStats.Black}}%</p>
-                                    <p style="color:white">Red:{{ColorStats.Red}}%</p>
+                                    <p style="color: white">Black:{{ColorStats.Black}}%</p>
+                                    <p style="color: white">Red:{{ColorStats.Red}}%</p>
                                 </div>
-                                <p style="color:white">Zero Percentage</p>
-                                <p style="color:red" ng-show="ZeroFailure">Unable to Retrieve Zero Percentage. Please contact system administrator.</p>
-                                <div style="background-color:white" ng-show="!ZeroFailure">
-                                    <p style="color:green">0:{{Zero.Zero}}%</p>
+                                <p style="color: white">Zero Percentage</p>
+                                <p style="color: red" ng-show="ZeroFailure">Unable to Retrieve Zero Percentage. Please contact system administrator.</p>
+                                <div style="background-color: white" ng-show="!ZeroFailure">
+                                    <p style="color: green">0:{{Zero.Zero}}%</p>
                                 </div>
-                                <p style="color:white">Hot Numbers</p>
-                                <p style="color:red" ng-show="HotNumberFailure">Unable to Retrieve Hot Numbers. Please contact system administrator.</p>
-                                <div style="background-color:white" ng-show="!HotNumberFailure"><p ng-repeat="HotNumber in HotNumbers" ng-style="{'color':HotNumber.Color.Name}">{{HotNumber.Number}}</p></div>
-                                <p style="color:white">Cool Numbers</p>
-                                <p style="color:red" ng-show="CoolNumberFailure">Unable to Retrieve Cool Numbers. Please contact system administrator.</p>
-                                <div style="background-color:white" ng-show="!CoolNumberFailure">
+                                <p style="color: white">Hot Numbers</p>
+                                <p style="color: red" ng-show="HotNumberFailure">Unable to Retrieve Hot Numbers. Please contact system administrator.</p>
+                                <div style="background-color: white" ng-show="!HotNumberFailure">
+                                    <p ng-repeat="HotNumber in HotNumbers" ng-style="{'color':HotNumber.Color.Name}">{{HotNumber.Number}}</p>
+                                </div>
+                                <p style="color: white">Cool Numbers</p>
+                                <p style="color: red" ng-show="CoolNumberFailure">Unable to Retrieve Cool Numbers. Please contact system administrator.</p>
+                                <div style="background-color: white" ng-show="!CoolNumberFailure">
                                     <p ng-repeat="CoolNumber in CoolNumbers" ng-style="{'color':CoolNumber.Color.Name}">{{CoolNumber.Number}}</p>
                                 </div>
                             </div>
