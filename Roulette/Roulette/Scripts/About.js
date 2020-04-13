@@ -87,4 +87,7 @@ app.controller("HomeController", function ($scope, $http) {
                 });
         }
     };
+    window.onunload = function () {
+        LogOff();
+    };
 });
