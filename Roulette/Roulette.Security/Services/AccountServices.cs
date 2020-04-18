@@ -150,8 +150,7 @@ namespace Roulette.Security.Services
                 var allLines = (from log in logs
                                 select new Object[]
                                 {
-                                    log.User.UserName,
-                                    log.Supervisor.UserName,
+                                    log.Supervisor?.UserName,
                                     log.UserSessionLogs.LoginTime.ToString(),
                                     log.UserSessionLogs.LogOutTime.ToString(),
                                     log.BetPlaced.ToString(),
@@ -163,7 +162,8 @@ namespace Roulette.Security.Services
 
                 // Build the file content
                 var csv = new StringBuilder();
-                csv.AppendLine(string.Join(",", "UserName,Supervisor,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time","Deleted"));
+                csv.AppendLine(string.Join(",", "Supervisor,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time","Deleted"));
+                csv.AppendLine(String.Join(",", "UserName,"+ logs.FirstOrDefault().User.UserName));
                 allLines.ForEach(line =>
                 {
                     csv.AppendLine(string.Join(",", line));
