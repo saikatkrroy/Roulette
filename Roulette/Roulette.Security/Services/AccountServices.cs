@@ -150,7 +150,7 @@ namespace Roulette.Security.Services
                 var allLines = (from log in logs
                                 select new Object[]
                                 {
-                                    log.Supervisor?.UserName,
+                                    log.Supervisor==null?"No Supervisor":log.Supervisor.UserName,
                                     log.UserSessionLogs.LoginTime.ToString(),
                                     log.UserSessionLogs.LogOutTime.ToString(),
                                     log.BetPlaced.ToString(),
@@ -162,14 +162,17 @@ namespace Roulette.Security.Services
 
                 // Build the file content
                 var csv = new StringBuilder();
-                csv.AppendLine(string.Join(",", "Supervisor,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time","Deleted"));
                 csv.AppendLine(String.Join(",", "UserName,"+ logs.FirstOrDefault().User.UserName));
+                csv.AppendLine(string.Join(",", "Supervisor,LogInTime,LogOutTime,BetPlaced,Number,RouletteEventName","Bet Placed Time","Deleted"));
                 allLines.ForEach(line =>
                 {
                     csv.AppendLine(string.Join(",", line));
                 });
                 File.WriteAllText(filePath, csv.ToString());
             }
+
+            var logsToBeDeleted = logs.FindAll(l => l.DeleteFlag == true);
+            logsToBeDeleted.ForEach(l=>_logRepository.Delete(l));
             //Remove current usersession
             _userSessionRepository.Delete(userSession);
             _unitOfWork.SaveChanges();
