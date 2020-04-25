@@ -89,15 +89,21 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
     };
     $scope.LogOff = function () {
         var response = confirm("Are you sure you want to LogOut");
+        if (event.type === 'unload')
+            response = true;
         if (response == true) {
-            $http.post('/api/Account/Logoff').then(function successCallback(response) {
-                if (response.status === 200) {
-                    window.location.href = response.data.RedirectUrl;
-                }
-            },
-                function failureCallback(response) {
-                    $scope.LoginFailed = true;
-                });
+            //$http.post('/api/Account/Logoff').then(function successCallback(response) {
+            //    if (response.status === 200) {
+            //        window.location.href = response.data.RedirectUrl;
+            //    }
+            //},
+            //    function failureCallback(response) {
+            //        $scope.LoginFailed = true;
+            //    });
+            var request = new XMLHttpRequest();
+            request.open("POST", "/api/Account/Logoff", false);  // `false` makes the request synchronous
+            request.setRequestHeader("Content-Type", "application/JSON");
+            request.send();
         }
     };
     $scope.RetrieveUserStat = function () {
@@ -177,7 +183,6 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
         $scope.$digest();
 
     };
-    window.onunload = function() {
-        LogOff();
-    };
+
+    addEventListener("unload", $scope.LogOff);
 });

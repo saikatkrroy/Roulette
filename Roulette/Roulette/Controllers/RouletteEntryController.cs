@@ -275,12 +275,16 @@ namespace Roulette.Controllers
             var userSession = _userSessionRepository.Find(us => us.AuthToken == Authorisation.AuthToken).Single();
             if (userSession == null)
                 throw new Exception("Invalid User");
-            var logList = _logRepository.Find(l => l.Number.Number == existingEntry && l.UserId == userSession.UserId);
+            var userSessionLog =
+                _userSessionLogRepository.Find(usl =>
+                    usl.UserId == userSession.UserId && usl.LogOutTime == null).OrderByDescending(l=>l.Id).First();
+            var logList = _logRepository.Find(l => l.UserSessionLogId== userSessionLog.Id);
             var log = (from logs in logList
                        orderby logs.Id descending
-                       select logs).Take(1).Single();
-            log.DeleteFlag = true;
-            _logRepository.Update(log);
+                       select logs).Take(12);
+            var deleteLog = log.FirstOrDefault(l => l.DeleteFlag != true);
+            deleteLog.DeleteFlag = true;
+            _logRepository.Update(deleteLog);
             _unitofWork.SaveChanges();
         }
         //[HttpGet]
