@@ -92,18 +92,15 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
         if (event.type === 'unload')
             response = true;
         if (response == true) {
-            //$http.post('/api/Account/Logoff').then(function successCallback(response) {
-            //    if (response.status === 200) {
-            //        window.location.href = response.data.RedirectUrl;
-            //    }
-            //},
-            //    function failureCallback(response) {
-            //        $scope.LoginFailed = true;
-            //    });
-            var request = new XMLHttpRequest();
-            request.open("POST", "/api/Account/Logoff", false);  // `false` makes the request synchronous
-            request.setRequestHeader("Content-Type", "application/JSON");
-            request.send();
+            $http.post('/api/Account/Logoff').then(function successCallback(response) {
+                if (response.status === 200) {
+                    window.location.href = response.data.RedirectUrl;
+                }
+            },
+                function failureCallback(response) {
+                    $scope.LoginFailed = true;
+                });
+            
         }
     };
     $scope.RetrieveUserStat = function () {
@@ -184,5 +181,10 @@ app.controller("HomeController", function ($scope, $http, $timeout) {
 
     };
 
-    addEventListener("unload", $scope.LogOff);
+    addEventListener("unload", function () {
+        var request = new XMLHttpRequest();
+        request.open("POST", "/api/Account/Logoff", false);  // `false` makes the request synchronous
+        request.setRequestHeader("Content-Type", "application/JSON");
+        request.send();
+    });
 });
